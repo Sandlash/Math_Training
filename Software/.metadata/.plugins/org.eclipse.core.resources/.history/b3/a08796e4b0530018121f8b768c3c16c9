@@ -1,0 +1,248 @@
+/*
+ * gui_2.0.c
+ *
+ *  Created on: 09/mag/2018
+ *      Author: emilio
+ */
+
+#include "terasic_includes.h"
+#include "gui.h"
+#include "alt_video_display.h"
+#include "simple_graphics.h"
+#include "geometry.h"
+#include "touch_spi.h"
+#include "mnist-utils.h"
+
+
+#define DOT_SIZE    15
+
+
+void GUI_ShowInfo(alt_video_display *pDisplay, char *pText);
+void GUI_ShowWelcome(alt_video_display *pDisplay);
+void GUI_ShowTouchPoint(alt_video_display *pDisplay, int X1, int Y1, int color);
+
+
+typedef enum{
+    BTN_CLEAR = 0,
+    BTN_ENTER,		//1
+    BTN_RESULT,		//2
+    BTN_NUM,		//3
+
+    BTN_NONE
+}BUTTON_ID;
+
+
+typedef struct{
+    RECT rcPaint;						//rettangolo in cui si scrive
+    RECT clear;
+    RECT enter;
+    RECT expression;					//rettangolo in cui compare l'espressione da risolvere
+    RECT result;						//rettangolo contenente il risultato
+}DESK_INFO;
+
+
+void GUI_ShowWelcome(alt_video_display *pDisplay){
+	int x, y;
+
+	x = pDisplay->width / 2 - 60;
+	y = pDisplay->height / 2 - 10;
+
+	vid_print_string_alpha(x, y, BLUE_24, BLACK_24, tahomabold_20, pDisplay, "Math Training");
+
+}
+
+void GUI_DeskInit(alt_video_display *pDisplay, DESK_INFO *pDeskInfo){
+    RECT rc;
+    /*dimensioni pulsanti*/
+    const int BoxH = 40;
+    const int BoxW = 110;
+    const int BoxW_quiz = 140;
+
+    const int GapH = 5;
+    const int GapW = 4;
+    const int DrawBorder = 8;
+
+    RectSet(&pDeskInfo->clear, DrawBorder, DrawBorder+BoxW, pDisplay->height-BoxH-GapH, pDisplay->height-GapH);
+
+    RectSet(&pDeskInfo->enter, DrawBorder+BoxW+GapW, DrawBorder+2*BoxW+GapW, pDisplay->height-BoxH-GapH, pDisplay->height-GapH);
+
+    RectSet(&pDeskInfo->expression, DrawBorder, DrawBorder+BoxW_quiz, GapH, GapH+BoxH);
+
+    RectSet(&pDeskInfo->result, 12+BoxW_quiz, 12+BoxW_quiz+2*BoxH, GapH, GapH+BoxH);
+
+    // desk drawing area
+    RectSet(&pDeskInfo->rcPaint, DrawBorder, pDisplay->width-DrawBorder, BoxH+DrawBorder, pDisplay->height-DrawBorder-BoxH);
+
+}
+
+int GUI_CheckButton(DESK_INFO *pDeskInfo, POINT *pt){
+    int ButtonId = BTN_NONE;
+
+	if (IsPtInRect(pt, &pDeskInfo->clear))
+		ButtonId = BTN_CLEAR;
+	else if (IsPtInRect(pt, &pDeskInfo->enter))
+		ButtonId = BTN_ENTER;
+	else if (IsPtInRect(pt, &pDeskInfo->result))
+		ButtonId = BTN_RESULT;
+
+    return ButtonId;
+}
+
+void GUI_DeskDraw(alt_video_display *pDisplay, DESK_INFO *pDeskInfo){
+    RECT rc;
+
+    // draw border (bordo bianco che delimita l'area di scrittura)
+    RectCopy(&rc, &pDeskInfo->rcPaint);
+    vid_draw_box (rc.left, rc.top, rc.right, rc.bottom, WHITE_24, DO_NOT_FILL, pDisplay);
+
+
+	//disegno il pulsante di clear
+	RectCopy(&rc, &(pDeskInfo->clear));
+	vid_draw_box (rc.left, rc.top, rc.right, rc.bottom, RED_24, DO_FILL, pDisplay);
+	vid_print_string_alpha(rc.left+30, rc.top+(RectHeight(&rc)-22)/2, WHITE_24, BLACK_24, tahomabold_20, pDisplay, "Clear");
+
+	//disegno il pulsante di enter
+	RectCopy(&rc, &(pDeskInfo->enter));
+	vid_draw_box (rc.left, rc.top, rc.right, rc.bottom, GREEN, DO_FILL, pDisplay);
+	vid_print_string_alpha(rc.left+30, rc.top+(RectHeight(&rc)-22)/2, WHITE_24, BLACK_24, tahomabold_20, pDisplay, "Enter");
+
+	//disegno il campo expression
+	RectCopy(&rc, &(pDeskInfo->expression));
+	vid_draw_box (rc.left, rc.top, rc.right, rc.bottom, WHITE_24, DO_FILL, pDisplay);
+	vid_print_string_alpha(rc.left+30, rc.top+(RectHeight(&rc)-22)/2, BLACK_24, WHITE_24, tahomabold_20, pDisplay, "2x3=");
+
+	//disegno il campo result
+	RectCopy(&rc, &(pDeskInfo->result));
+	vid_draw_box (rc.left, rc.top, rc.right, rc.bottom, WHITE_24, DO_FILL, pDisplay);
+
+}
+
+
+bool IsContinuedPoint(POINT *ptPre, POINT *ptNew){
+    bool bYes = TRUE;
+    const int nMax = 50;
+    if (abs(ptPre->x - ptNew->x) > nMax)
+        bYes = FALSE;
+    else if (abs(ptPre->y - ptNew->y) > nMax)
+        bYes = FALSE;
+
+    return bYes;
+}
+
+
+void GUI_ClearPaintArea(alt_video_display *pDisplay, DESK_INFO *pDeskInfo){
+    RECT rc;
+    RectCopy(&rc, &pDeskInfo->rcPaint);
+    RectInflate(&rc, -1, -1);
+    vid_draw_box (rc.left, rc.top, rc.right, rc.bottom, BLACK_24, DO_FILL, pDisplay);
+}
+
+
+void update_img(POINT pt, bool* img){
+	int x_start=pt.x-14;
+	int y_start=pt.y-14;
+	for(int y=y_start; y<y_start+28; y++)
+		for(int x=x_start; x<x_start+28; x++){
+			if(x>0 && y>0)
+				img[x+SCREEN_WIDTH*y]=1;
+		}
+}
+
+void resize_image(bool* img, MNIST_Image* mnist_img){
+	int medium=0;
+	for(int j=0; j<28; j++){
+		for(int i=0; i<28; i++){
+			for(int y=0; y<8; y++){
+				for(int x=0; x<8; x++){
+					medium+=img[x+SCREEN_WIDTH*y];
+				}
+			}
+			if(medium > 32){
+				medium=0;
+				mnist_img->pixel[i+28*j]=1;
+				printf("x");
+			}
+			else{
+				medium=0;
+				printf("o");
+			}
+		}
+	printf("\n");
+	}
+}
+
+void GUI(alt_video_display *pDisplay, TOUCH_HANDLE *pTouch){
+    // video
+    DESK_INFO DeskInfo;
+    int X, Y;
+    POINT Pt;
+    const int nDotSize = DOT_SIZE;
+    RECT rcTouch;
+    int ColorPen, ButtonId;
+
+    bool img[DRAW_WIDTH*DRAW_WIDTH];
+    MNIST_Image mnist_img;
+    bool img_ready;
+
+    // Schermata iniziale
+	GUI_ShowWelcome(pDisplay);
+	usleep(1*1000*1000);
+	vid_clean_screen(pDisplay, BLACK_24);
+
+    // clean screen
+    vid_clean_screen(pDisplay, BLACK_24);
+
+    GUI_DeskInit(pDisplay, &DeskInfo);		//imposta i vari rettangoli
+    GUI_DeskDraw(pDisplay, &DeskInfo);		//colora e riempie tutto
+
+
+    RectCopy(&rcTouch, &DeskInfo.rcPaint);
+    RectInflate(&rcTouch, -nDotSize-2, -nDotSize-2);
+
+    ColorPen = WHITE_24;
+
+   // PtSet(&ptGesture, DeskInfo.szPalette[BTN_GESTRUE].rc.left+5, DeskInfo.szPalette[BTN_GESTRUE].rc.top+5);
+
+    while(1){
+		// touch
+		if (Touch_GetXY(pTouch, &X, &Y)){
+
+			PtSet(&Pt, X, Y);
+
+			/*se c'è tocco nell'area buona, coloro il punto toccato*/
+			if ( IsPtInRect(&Pt, &rcTouch)){
+				vid_draw_circle(Pt.x, Pt.y, nDotSize, ColorPen, DO_FILL, pDisplay);
+				update_img(Pt, &img);
+			}
+			/*se ho cliccato clear, pulisco*/
+			else if (GUI_CheckButton(&DeskInfo, &Pt) == BTN_CLEAR){
+				GUI_ClearPaintArea(pDisplay, &DeskInfo);
+				Touch_EmptyFifo(pTouch);
+			}
+			/*se do conferma, avvio la rete neurale*/
+			else if (GUI_CheckButton(&DeskInfo, &Pt) == BTN_ENTER){
+				//LCD_GetImage(&DeskInfo &img, pDisplay);
+				resize_image(img, &mnist_img);
+				img_ready = 1;
+			}
+
+			ButtonId = GUI_CheckButton(&DeskInfo, &Pt);
+
+		} // if touch
+    } // while
+
+}
+
+
+
+void GUI_ShowInfo(alt_video_display *pDisplay, char *pText){
+    static int x=0,y=100;
+   // vid_clean_screen(pReader, BLACK_24);
+    vid_print_string_alpha(x, y, BLUE_24, BLACK_24, tahomabold_20, pDisplay, pText);
+}
+
+void GUI_ShowTouchPoint(alt_video_display *pDisplay, int X, int Y, int color){
+    vid_draw_circle(X, Y, 10, color, DO_FILL, pDisplay);
+}
+
+

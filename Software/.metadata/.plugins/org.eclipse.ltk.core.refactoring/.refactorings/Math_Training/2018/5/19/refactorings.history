@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;Math_Training/src/gui_2.0.c&apos; to &apos;gui.c&apos;" description="Rename resource &apos;gui_2.0.c&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/gui_2.0.c" name="gui.c" stamp="1525875612713" updateReferences="true"/>
+</session>
