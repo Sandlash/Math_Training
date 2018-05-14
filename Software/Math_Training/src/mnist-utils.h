@@ -5,6 +5,8 @@
  * @author Matt Lind
  * @date July 2015
  */
+#ifndef MNIST_H_
+#define MNIST_H_
 
 #include <stdint.h>
 #include <stdio.h>
@@ -112,3 +114,6 @@ MNIST_Image getImage(FILE *imageFile);
  */
 
 MNIST_Label getLabel(FILE *labelFile);
+
+
+#endif

@@ -11,9 +11,8 @@
 
 #include "mnist-utils.h"
 #include "1lnn.h"
+#include "weights.h"
 
-
-//extern double WEIGHTS[];
 
 
 /**
@@ -66,7 +65,6 @@ uint8_t getLayerPrediction(Layer *l){
     uint8_t maxInd = 0;
     
     for (int i=0; i<NUMBER_OF_OUTPUT_CELLS; i++){
-        
         if (l->cell[i].output > maxOut){
             maxOut = l->cell[i].output;
             maxInd = i;
@@ -91,6 +89,7 @@ void setCellInput(Cell *c, MNIST_Image *img){
     
     for (int i=0; i<NUMBER_OF_INPUT_CELLS; i++){
         c->input[i] = img->pixel[i] ? 1 : 0;
+
     }
 }
 

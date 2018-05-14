@@ -4,8 +4,9 @@
 #include "alt_video_display.h"
 #include "touch_spi.h"
 #include "geometry.h"
+#include "1lnn.h"
 
-void GUI(alt_video_display *pDisplay, TOUCH_HANDLE *pTouch);
+void GUI(alt_video_display *pDisplay, TOUCH_HANDLE *pTouch, Layer *nn_layer);
 
 /*typedef enum{
     BTN_CLEAR = 0,

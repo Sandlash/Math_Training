@@ -296,27 +296,18 @@ int vid_print_char_alpha (int horiz_offset, int vert_offset, int color, char cha
 
   for(i = 0; i < font[character-33].bounds_height; i++) {
     for (j = 0; j < font[character-33].bounds_width; j++) {
-    	if (*alpha == 0x00){
-		  // skip the alpha blending when writing a blank pixel
-		  vid_set_pixel((horiz_offset + j), (vert_offset + i), background_color, display);
 
-		  alpha++;
-    	}
+    	if (*alpha >= 0x80){
+    		//center pixels filled with color
+    		vid_set_pixel((horiz_offset + j), (vert_offset + i), color, display);
+
+    		alpha++;
+		}
     	else{
-		  red = original_red;
-		  green = original_green;
-		  blue = original_blue;
+    		//extern pixels filled with background_color
+		    vid_set_pixel((horiz_offset + j), (vert_offset + i), background_color, display);
 
-		  // send in the font alpha channel and the colour channels for the blending to occur
-		  alpha_blending ((horiz_offset + j), (vert_offset + i), background_color, *alpha, &red, &green, &blue, display);
-
-		  // take the blended pixel and merge the color channels back into a single pixel value
-		  merge_color_channels(display->color_depth, red, green, blue, (char *)&new_color);
-
-		  // write the new pixel value out to memory overwriting the current background
-		  vid_set_pixel((horiz_offset + j), (vert_offset + i), new_color, display);
-
-		  alpha++;
+		    alpha++;
     	}
     }
   }

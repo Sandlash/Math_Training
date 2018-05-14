@@ -4,9 +4,11 @@
  * @author Matt Lind
  * @date July 2015
  */
-
+#ifndef LNN_H_
+#define LNN_H_
 
 #include <stdio.h>
+#include "mnist-utils.h"
 
 #define NUMBER_OF_INPUT_CELLS 784   ///< use 28*28 input cells (= number of pixels per MNIST image)
 #define NUMBER_OF_OUTPUT_CELLS 10   ///< use 10 output cells to model 10 digits (0-9)
@@ -19,7 +21,6 @@ typedef struct Cell Cell;
 typedef struct Layer Layer;
 typedef struct Vector Vector;
 
-static const double WEIGHTS[7840];
 
 
 /**
@@ -160,3 +161,5 @@ void testCell(Cell *c, MNIST_Image *img);
  */
 int testLayer(Layer *l, MNIST_Image *img);
 
+
+#endif

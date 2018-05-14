@@ -12,6 +12,7 @@
 #include "geometry.h"
 #include "touch_spi.h"
 #include "mnist-utils.h"
+#include "1lnn.h"
 
 
 #define DOT_SIZE    15
@@ -93,12 +94,12 @@ void GUI_DeskDraw(alt_video_display *pDisplay, DESK_INFO *pDeskInfo){
 	//disegno il pulsante di clear
 	RectCopy(&rc, &(pDeskInfo->clear));
 	vid_draw_box (rc.left, rc.top, rc.right, rc.bottom, RED_24, DO_FILL, pDisplay);
-	vid_print_string_alpha(rc.left+30, rc.top+(RectHeight(&rc)-22)/2, WHITE_24, BLACK_24, tahomabold_20, pDisplay, "Clear");
+	vid_print_string_alpha(rc.left+30, rc.top+(RectHeight(&rc)-22)/2, WHITE_24, RED_24, tahomabold_20, pDisplay, "Clear");
 
 	//disegno il pulsante di enter
 	RectCopy(&rc, &(pDeskInfo->enter));
 	vid_draw_box (rc.left, rc.top, rc.right, rc.bottom, GREEN, DO_FILL, pDisplay);
-	vid_print_string_alpha(rc.left+30, rc.top+(RectHeight(&rc)-22)/2, WHITE_24, BLACK_24, tahomabold_20, pDisplay, "Enter");
+	vid_print_string_alpha(rc.left+30, rc.top+(RectHeight(&rc)-22)/2, BLACK_24, GREEN, tahomabold_20, pDisplay, "Enter");
 
 	//disegno il campo expression
 	RectCopy(&rc, &(pDeskInfo->expression));
@@ -146,50 +147,32 @@ void update_img(POINT pt, bool* img, DESK_INFO* desk){
 }
 
 void resize_image(bool* img, MNIST_Image* mnist_img){
-	//int row=0;
-	//int column=0;
-	int average=0;
+	int row=0;
+	int column=0;
 
-	/*for(int i=0; i<224*224; i++){
+	for(int k=0; k<28*28; k++)
+		mnist_img->pixel[k]=0;
+
+	for(int i=0; i<224*224; i++){
 		row=i/224;
 		column=i%224;
-		mnist_img[(column%28)+(row/8)*28] += img[i];
+		mnist_img->pixel[(column/8)+(row/8)*28] += (uint8_t)img[i];
 	}
 	for(int j=0; j<28*28; j++){
 		if(j%28 == 0)
 			printf("\n");
-		if(mnist_img[j] >= 32){
-			mnist_img[j]=1;
+		if(mnist_img->pixel[j] >= 32){
+			mnist_img->pixel[j]=1;
 			printf("x");
 		}
 		else{
-			mnist_img[j]=0;
+			mnist_img->pixel[j]=0;
 			printf("o");
 		}
-	}*/
-	for(int j=0; j<28; j++){
-		for(int i=0; i<28; i++){
-			for(int y=0; y<8; y++){
-				for(int x=0; x<8; x++){
-					average+=img[x+DRAW_WIDTH*y];
-				}
-			}
-			if(average >= 32){
-				average=0;
-				mnist_img->pixel[i+28*j]=1;
-				printf("x");
-			}
-			else{
-				average=0;
-				mnist_img->pixel[i+28*j]=0;
-				printf("o");
-			}
-		}
-	printf("\n");
 	}
 }
 
-void GUI(alt_video_display *pDisplay, TOUCH_HANDLE *pTouch){
+void GUI(alt_video_display *pDisplay, TOUCH_HANDLE *pTouch, Layer *nn_layer){
     // video
     DESK_INFO DeskInfo;
     int X, Y;
@@ -197,10 +180,13 @@ void GUI(alt_video_display *pDisplay, TOUCH_HANDLE *pTouch){
     const int nDotSize = DOT_SIZE;
     RECT rcTouch;
     int ColorPen, ButtonId;
+    uint8_t result[3]={0,0,0};
 
     bool img[DRAW_WIDTH*DRAW_WIDTH];
     MNIST_Image mnist_img;
-    bool img_ready;
+    uint8_t img_ready=0;
+    uint8_t digits=0;
+    bool red_digit=0;
 
     for(int i=0; i<DRAW_WIDTH*DRAW_WIDTH; i++)
     	img[i]=0;
@@ -215,7 +201,6 @@ void GUI(alt_video_display *pDisplay, TOUCH_HANDLE *pTouch){
 
     GUI_DeskInit(pDisplay, &DeskInfo);		//imposta i vari rettangoli
     GUI_DeskDraw(pDisplay, &DeskInfo);		//colora e riempie tutto
-
 
     RectCopy(&rcTouch, &DeskInfo.rcPaint);
     RectInflate(&rcTouch, -nDotSize-2, -nDotSize-2);
@@ -235,19 +220,48 @@ void GUI(alt_video_display *pDisplay, TOUCH_HANDLE *pTouch){
 				vid_draw_circle(Pt.x, Pt.y, nDotSize, ColorPen, DO_FILL, pDisplay);
 				update_img(Pt, img, &DeskInfo);
 			}
+
 			/*se ho cliccato clear, pulisco*/
 			else if (ButtonId == BTN_CLEAR){
+				img_ready=0;
 				GUI_ClearPaintArea(pDisplay, &DeskInfo);
 				Touch_EmptyFifo(pTouch);
+				if(red_digit){
+					vid_draw_box (DeskInfo.result.left, DeskInfo.result.top, DeskInfo.result.right, DeskInfo.result.bottom, WHITE_24, DO_FILL, pDisplay);
+
+				}
+				for(int i=0; i<DRAW_WIDTH*DRAW_WIDTH; i++)
+				    img[i]=0;
 			}
+
 			/*se do conferma, avvio la rete neurale*/
-			else if (ButtonId == BTN_ENTER){
+			else if (ButtonId == BTN_ENTER && !img_ready){
+				if(!red_digit){
+
+				}
 				//LCD_GetImage(&DeskInfo &img, pDisplay);
 				resize_image(img, &mnist_img);
 				img_ready = 1;
+				for(int i=0; i<DRAW_WIDTH*DRAW_WIDTH; i++)
+				    img[i]=0;
+			}
+
+			else if(ButtonId == BTN_RESULT){
+				img_ready=0;
+				red_digit=0;
+				vid_print_char_alpha(DeskInfo.result.left+20+13*digits, DeskInfo.result.top+9, BLACK_24, (char)(result[digits]+48), WHITE_24, tahomabold_20, pDisplay);
+				digits++;
 			}
 
 		} // if touch
+
+		if(img_ready==1){
+			result[digits]=testLayer(nn_layer, &mnist_img);
+			vid_print_char_alpha(DeskInfo.result.left+20+13*digits, DeskInfo.result.top+9, RED_24, (char)(result[digits]+48), WHITE_24, tahomabold_20, pDisplay);
+			img_ready=2;
+			red_digit=1;
+		}
+
     } // while
 
 }

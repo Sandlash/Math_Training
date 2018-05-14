@@ -38,9 +38,6 @@
 
 
 int main() {
-	uint8_t img_ready=0;
-	uint8_t result;
-	MNIST_Image mnist_img;
 
     Layer outputLayer;
 
@@ -75,12 +72,8 @@ int main() {
    Display.width = SCREEN_WIDTH;
 
    // init GUI
-   GUI(&Display, pTouch);
+   GUI(&Display, pTouch, &outputLayer);
 
-   /*while(1){
-		if(img_ready)
-			 result=testLayer(&outputLayer, &mnist_img);
-   }*/
 
     return 0;
 }
