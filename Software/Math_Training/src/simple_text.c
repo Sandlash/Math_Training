@@ -168,52 +168,8 @@ int merge_color_channels(int color_depth, unsigned char red, unsigned char green
 
 int read_from_frame (int horiz, int vert, unsigned char *red, unsigned char *green, unsigned char *blue, alt_video_display * display)
 {
-#ifdef LT24
 	printf("read_from_frame is not implemented!\r\n");
 	return -1;
-
-#else
-
-  int return_value;  // error checking in case anyone is listening
-  unsigned int temp_color;
-  unsigned int addr;
-  
-  if( display->color_depth == 32 )
-  {
-    addr = ((unsigned int)VIPFR_GetDrawFrame(display)) + ((unsigned int)((vert * display->width * 4) + (horiz * 4)));
-    temp_color = IORD_32DIRECT(addr, 0);
-    *blue = (unsigned char)(temp_color & 0xFF);
-    *green = (unsigned char)((temp_color >> 8) & 0xFF);
-    *red = (unsigned char)((temp_color >> 16) & 0xFF);
-    return_value = 1;
-  }
-  else if( display->color_depth == 24 )
-  {
-    addr = ((unsigned int)VIPFR_GetDrawFrame(display)) + ((unsigned int)((vert * display->width * 3) + (horiz * 3)));
-    *blue = IORD_8DIRECT(addr, 0);
-    *green = IORD_8DIRECT(addr, 1);
-    *red = IORD_8DIRECT(addr, 2);
-    return_value = 1;
-  }
-  else if( display->color_depth == 16 )
-  {
-    addr = ((unsigned int)VIPFR_GetDrawFrame(display)) + ((unsigned int)((vert * display->width * 2) + (horiz * 2)));
-    temp_color = (unsigned int)IORD_16DIRECT(addr, 0);
-    *blue = (unsigned char)(temp_color & 0x1F); 
-    *green = (unsigned char)((temp_color >> 5) & 0x3F);
-    *red = (unsigned char)((temp_color >> 11) & 0x1F);
-    return_value = 1;
-  }
-  else
-  {
-    *blue = 0;
-    *red = 0;
-    *green = 0;
-    return_value = 0; 
-  }
-
-  return return_value;
-#endif
 }
 
 
@@ -281,18 +237,11 @@ int alpha_blending (int horiz_offset, int vert_offset, int background_color, uns
 
 int vid_print_char_alpha (int horiz_offset, int vert_offset, int color, char character, int background_color, struct abc_font_struct font[], alt_video_display * display)
 {
-
   int i, j;
   unsigned char * alpha;
-  unsigned char original_red, original_blue, original_green;
-  unsigned char red, green, blue;
-  int new_color;
 
   // Assign the pointer of the font bitmap
   alpha = font[character-33].char_alpha_map;
-
-  // set red, green, and blue of the font color  
-  seperate_color_channels(display->color_depth, (char *)&color, &original_red, &original_green, &original_blue);
 
   for(i = 0; i < font[character-33].bounds_height; i++) {
     for (j = 0; j < font[character-33].bounds_width; j++) {

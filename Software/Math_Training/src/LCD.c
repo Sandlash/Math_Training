@@ -105,8 +105,6 @@ void LCD_DrawPoint(alt_u16 x,alt_u16 y,alt_u16 color )
 
 void LCD_Init()
 {
-	alt_u16 data1,data2;
-	alt_u16 data3,data4;
 	Set_LCD_RST;
 	Delay_Ms(1);
 	Clr_LCD_RST;

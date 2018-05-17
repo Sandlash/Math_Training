@@ -13,31 +13,7 @@ struct abc_font_struct {
   unsigned long reserved;
 };
 
-/*
-extern struct abc_font_struct arial_10[];
-extern struct abc_font_struct arial_12[];
-extern struct abc_font_struct arial_14[];
-extern struct abc_font_struct arial_16[];
-extern struct abc_font_struct arial_18[];
-extern struct abc_font_struct arial_20[];
-extern struct abc_font_struct arial_22[];
-extern struct abc_font_struct arial_24[];
-extern struct abc_font_struct courier_10[];
-extern struct abc_font_struct courier_12[];
-extern struct abc_font_struct courier_14[];
-extern struct abc_font_struct courier_16[];
-extern struct abc_font_struct courier_18[];
-extern struct abc_font_struct courier_20[];
-extern struct abc_font_struct courier_22[];
-extern struct abc_font_struct courier_24[];
-extern struct abc_font_struct timesnewroman_10[];
-extern struct abc_font_struct timesnewroman_12[];
-extern struct abc_font_struct timesnewroman_14[];
-extern struct abc_font_struct timesnewroman_16[];
-extern struct abc_font_struct timesnewroman_18[];
-extern struct abc_font_struct timesnewroman_20[];
-extern struct abc_font_struct timesnewroman_22[];
-extern struct abc_font_struct timesnewroman_24[];*/
+
 
 extern struct abc_font_struct tahomabold_32[];
 extern struct abc_font_struct tahomabold_20[];

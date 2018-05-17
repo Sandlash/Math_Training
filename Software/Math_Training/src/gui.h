@@ -3,31 +3,39 @@
 
 #include "alt_video_display.h"
 #include "touch_spi.h"
-#include "geometry.h"
+#include "touch_spi.h"
+#include "terasic_includes.h"
+#include "mnist-utils.h"
 #include "1lnn.h"
+#include "geometry.h"
 
-void GUI(alt_video_display *pDisplay, TOUCH_HANDLE *pTouch, Layer *nn_layer);
 
-/*typedef enum{
+#define DOT_SIZE    15		//raggio del punto
+
+
+typedef enum{
     BTN_CLEAR = 0,
-    BTN_WHITE,		//1
-    BTN_BLUE,		//2
-    BTN_GREEN,		//3
-    BTN_RED,		//4
-    BTN_NUM,		//5
+    BTN_ENTER,		//1
+    BTN_RESULT,		//2
+    BTN_NEWGAME,	//3
+    BTN_NUM,		//4
 
     BTN_NONE
 }BUTTON_ID;
 
-typedef struct{
-    RECT rc;
-    int  color;
-}PALETTE_INFO;
 
 typedef struct{
-    int Paint_Index;					//indice pulsante (colore) selezionato
     RECT rcPaint;						//rettangolo in cui si scrive
-    PALETTE_INFO szPalette[BTN_NUM];	//vettore di pulsanti colorati
-}DESK_INFO;*/
+    RECT clear;
+    RECT enter;
+    RECT expression;					//rettangolo in cui compare l'espressione da risolvere
+    RECT result;						//rettangolo contenente il risultato
+}DESK_INFO;
+
+void Resize_image(bool* img, MNIST_Image* mnist_img);
+void Update_img(POINT pt, bool* img, DESK_INFO desk);
+void GUI_ClearPaintArea(alt_video_display *pDisplay, DESK_INFO *pDeskInfo);
+int GUI_CheckButton(DESK_INFO *pDeskInfo, POINT *pt);
+void GUI(alt_video_display *pDisplay, DESK_INFO *DeskInfo, TOUCH_HANDLE *pTouch);
 
 #endif /*GUI_H_*/
