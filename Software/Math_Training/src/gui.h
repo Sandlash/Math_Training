@@ -9,6 +9,7 @@
 #include "1lnn.h"
 #include "geometry.h"
 
+#define SLIDERS_DATA_REG (*(volatile uint32_t*) SLIDERS_BASE)
 
 #define DOT_SIZE    15		//raggio del punto
 
@@ -37,5 +38,6 @@ void Update_img(POINT pt, bool* img, DESK_INFO desk);
 void GUI_ClearPaintArea(alt_video_display *pDisplay, DESK_INFO *pDeskInfo);
 int GUI_CheckButton(DESK_INFO *pDeskInfo, POINT *pt);
 void GUI(alt_video_display *pDisplay, DESK_INFO *DeskInfo, TOUCH_HANDLE *pTouch);
+void ShowHelp (alt_video_display *Display, DESK_INFO *DeskInfo, TOUCH_HANDLE *pTouch);
 
 #endif /*GUI_H_*/

@@ -24,7 +24,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
 #include <time.h>
 
 #include "src/mnist-utils.h"
@@ -103,10 +102,25 @@ int main() {
 
 
    exp=NewExpression();
-   char expression[] = {(char)(exp.value1/10+48), (char)(exp.value1%10+48), exp.operator, (char)(exp.value2/10+48), (char)(exp.value2%10+48), '=', '\0'};
+   char expression[] = {exp.value1/10==0 ? '_':(char)(exp.value1/10+48),
+      									 (char)(exp.value1%10+48),
+      									 exp.operator,
+      									 exp.value2/10==0 ? '_':(char)(exp.value2/10+48),
+      									 (char)(exp.value2%10+48), '=', '\0'};
    vid_print_string_alpha(DeskInfo.expression.left+30, DeskInfo.expression.top+9, BLACK_24, WHITE_24, tahomabold_20, &Display, expression);
 
    while(1){
+	   if(SLIDERS_DATA_REG & 0x01){
+		   ShowHelp(&Display, &DeskInfo, pTouch);
+		   //exp=NewExpression();
+		   char expression[] = {exp.value1/10==0 ? '_':(char)(exp.value1/10+48),
+		      									 (char)(exp.value1%10+48),
+		      									 exp.operator,
+		      									 exp.value2/10==0 ? '_':(char)(exp.value2/10+48),
+		      									 (char)(exp.value2%10+48), '=', '\0'};
+		   vid_print_string_alpha(DeskInfo.expression.left+30, DeskInfo.expression.top+9, BLACK_24, WHITE_24, tahomabold_20, &Display, expression);
+	   }
+
    		if (Touch_GetXY(pTouch, &X, &Y)){
 
    			PtSet(&Pt, X, Y);
@@ -138,18 +152,32 @@ int main() {
 				}
 				for(int i=0; i<DRAW_WIDTH*DRAW_WIDTH; i++)
 				   	img[i]=0;
+
    			}
 
    			/*se do conferma, avvio la rete neurale*/
    			else if (ButtonId == BTN_ENTER && status==NO_IMG){
 
    				if(!red_digit && writing==FALSE){				//confermo il risultato finale
-   					answer=result[0]*10+result[1];
+   					switch(digits){
+   						case 0:
+   							break;
+   						case 1:
+   							answer=result[0];
+   							break;
+   						case 2:
+   							answer = result[0]*10+result[1];
+   							break;
+   						case 3:
+							answer = result[0]*100+result[1]*10+result[2];
+							break;
+   					}
+
    	   				GUI_ClearPaintArea(&Display, &DeskInfo);
    	   				if(answer==exp.answer && digits!=0)
    	   					vid_print_string_alpha(DeskInfo.rcPaint.left+75, DeskInfo.rcPaint.top+90, GREEN, BLACK_24, tahomabold_32, &Display, "Nice");
    	   				else
-   	   					vid_print_string_alpha(DeskInfo.rcPaint.left+55, DeskInfo.rcPaint.top+80, RED_24, BLACK_24, tahomabold_32, &Display, "Holy...");
+   	   					vid_print_string_alpha(DeskInfo.rcPaint.left+75, DeskInfo.rcPaint.top+80, RED_24, BLACK_24, tahomabold_32, &Display, "Nope");
    	   				status=FINISHED;
 				}
    				else{

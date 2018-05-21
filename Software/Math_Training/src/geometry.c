@@ -1,5 +1,6 @@
 #include "terasic_includes.h"
 #include "geometry.h"
+#include <math.h>
 
 //#define BOUND(x, mini, maxi) ((x<(mini)?(mini):( (x>(maxi))?(maxi):(x) )))
 

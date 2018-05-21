@@ -9,7 +9,7 @@ expression NewExpression () {
 	int op;
 
 	srand((unsigned)time(NULL));
-	op = rand() % 4 + 1;
+	op = rand() % 5 + 1;
 
 	switch (op){
 		case 1:  // operatore '+'
@@ -39,7 +39,16 @@ expression NewExpression () {
 			} while (exp.answer < 0 || exp.answer >= 100);
 			break;
 
-		case 4:  // operatore '%'
+		case 4:  // operatore '/'
+			exp.operator = '/';
+			exp.value1 = rand() % 80 + 20;
+			do {
+				exp.value2 = rand() % 40 + 4;
+				exp.answer = exp.value1 / exp.value2;
+			} while (exp.answer < 0 || exp.answer >100);
+			break;
+
+		case 5:  // operatore '%'
 			exp.operator = '%';
 			exp.value1 = rand() % 80 + 20;
 			do {

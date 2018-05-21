@@ -137,6 +137,7 @@ void GUI(alt_video_display *pDisplay, DESK_INFO *DeskInfo, TOUCH_HANDLE *pTouch)
     //const int nDotSize = DOT_SIZE;
 
     // Schermata iniziale
+	vid_clean_screen(pDisplay, BLACK_24);
 	GUI_ShowWelcome(pDisplay);
 	usleep(1*1000*1000);
 	vid_clean_screen(pDisplay, BLACK_24);
@@ -149,5 +150,21 @@ void GUI(alt_video_display *pDisplay, DESK_INFO *DeskInfo, TOUCH_HANDLE *pTouch)
 
 }
 
+void ShowHelp (alt_video_display *Display, DESK_INFO *DeskInfo, TOUCH_HANDLE *pTouch){
+	vid_clean_screen(Display, BLUE_24);
+	vid_print_string_alpha(30, 10, WHITE_24, BLUE_24, tahomabold_20, Display, "How to...");
+	vid_print_string_alpha(30, 40, WHITE_24, BLUE_24, tahomabold_20, Display, ">Draw digit");
+	vid_print_string_alpha(30, 70, WHITE_24, BLUE_24, tahomabold_20, Display, ">Enter to check");
+	vid_print_string_alpha(30, 100, WHITE_24, BLUE_24, tahomabold_20, Display, "  clear otherwise");
+	vid_print_string_alpha(30, 130, WHITE_24, BLUE_24, tahomabold_20, Display, ">Touch result");
+	vid_print_string_alpha(30, 160, WHITE_24, BLUE_24, tahomabold_20, Display, "  to validate digit");
+	vid_print_string_alpha(30, 190, WHITE_24, BLUE_24, tahomabold_20, Display, "  clear otherwise");
+	vid_print_string_alpha(30, 220, WHITE_24, BLUE_24, tahomabold_20, Display, ">Done to confirm");
+	vid_print_string_alpha(30, 250, WHITE_24, BLUE_24, tahomabold_20, Display, ">New Game");
+	while(SLIDERS_DATA_REG & 0x01){
 
+	};
+	// init GUI again
+	GUI(Display, DeskInfo, pTouch);
+}
 
