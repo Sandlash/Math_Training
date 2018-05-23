@@ -8,7 +8,10 @@
 #define LNN_H_
 
 #include <stdio.h>
-#include "mnist-utils.h"
+#include <stdint.h>
+
+#define MNIST_IMG_WIDTH 28                                  ///< image width in pixel
+#define MNIST_IMG_HEIGHT 28                                 ///< image height in pixel
 
 #define NUMBER_OF_INPUT_CELLS 784   ///< use 28*28 input cells (= number of pixels per MNIST image)
 #define NUMBER_OF_OUTPUT_CELLS 10   ///< use 10 output cells to model 10 digits (0-9)
@@ -20,6 +23,18 @@
 typedef struct Cell Cell;
 typedef struct Layer Layer;
 typedef struct Vector Vector;
+typedef struct MNIST_Image MNIST_Image;
+
+
+
+/**
+ * @brief Data block defining a MNIST image
+ * @see http://yann.lecun.com/exdb/mnist/ for details
+ */
+struct MNIST_Image{
+    uint8_t pixel[28*28];
+};
+
 
 
 

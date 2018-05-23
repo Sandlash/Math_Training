@@ -17,7 +17,7 @@
 *           32 bit - 0 : R(8):G(8):B(8) (unpacked)
 ******************************************************************/
 
-int vid_print_string_alpha(int horiz_offset, int vert_offset, int color, int background_color, struct abc_font_struct font[], alt_video_display * display, char string[])
+int vid_print_string_alpha(int horiz_offset, int vert_offset, int color, int background_color, struct abc_font_struct font[], char string[])
 {
   int i = 0;
   int tab;
@@ -39,7 +39,7 @@ int vid_print_string_alpha(int horiz_offset, int vert_offset, int color, int bac
     {
       if(background_color != CLEAR_BACKGROUND)  // need to fill in this spot (setting foreground to background color so that it looks like a drawn in box)
       {
-        vid_print_char_alpha (horiz_offset, vert_offset, background_color, '-', background_color, font, display);
+        vid_print_char_alpha (horiz_offset, vert_offset, background_color, '-', background_color, font);
       }
       horiz_offset += font[45 - 33].bounds_width;  // using the width of the '-' character for the space width since it's not present in the font
     }
@@ -49,14 +49,14 @@ int vid_print_string_alpha(int horiz_offset, int vert_offset, int color, int bac
       {
         if(background_color != CLEAR_BACKGROUND)  // need to fill in this spot (setting foreground to background color so that it looks like a drawn in box)
         {
-          vid_print_char_alpha (horiz_offset, vert_offset, background_color, '-', background_color, font, display);
+          vid_print_char_alpha (horiz_offset, vert_offset, background_color, '-', background_color, font);
         }
         horiz_offset += font[45 - 33].bounds_width;  // using the width of the '-' character for the space width since it's not present in the font
       }
     }
     else
     {
-      vid_print_char_alpha (horiz_offset, vert_offset, color, string[i], background_color, font, display);
+      vid_print_char_alpha (horiz_offset, vert_offset, color, string[i], background_color, font);
       horiz_offset += font[string[i] - 33].bounds_width;
     }
     i++;
@@ -235,7 +235,7 @@ int alpha_blending (int horiz_offset, int vert_offset, int background_color, uns
 *
 ******************************************************************/
 
-int vid_print_char_alpha (int horiz_offset, int vert_offset, int color, char character, int background_color, struct abc_font_struct font[], alt_video_display * display)
+int vid_print_char_alpha (int horiz_offset, int vert_offset, int color, char character, int background_color, struct abc_font_struct font[])
 {
   int i, j;
   unsigned char * alpha;
@@ -248,13 +248,13 @@ int vid_print_char_alpha (int horiz_offset, int vert_offset, int color, char cha
 
     	if (*alpha >= 0x80){
     		//center pixels filled with color
-    		vid_set_pixel((horiz_offset + j), (vert_offset + i), color, display);
+    		vid_set_pixel((horiz_offset + j), (vert_offset + i), color);
 
     		alpha++;
 		}
     	else{
     		//extern pixels filled with background_color
-		    vid_set_pixel((horiz_offset + j), (vert_offset + i), background_color, display);
+		    vid_set_pixel((horiz_offset + j), (vert_offset + i), background_color);
 
 		    alpha++;
     	}

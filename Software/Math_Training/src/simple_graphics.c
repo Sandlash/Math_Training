@@ -88,10 +88,10 @@ int vid_move_block(int xbegin, int ybegin, int xend, int yend, int x_distance, i
       for(read_x = xbegin; read_x < xend; read_x++) {
         write_x = read_x + x_distance;
         temp_pixel = vid_get_pixel(read_x, read_y, display);
-        vid_set_pixel(write_x, write_y, temp_pixel, display);
+        vid_set_pixel(write_x, write_y, temp_pixel);
         if(read_x >= xend + x_distance || read_y >= yend + y_distance)
         {
-	        vid_set_pixel(read_x, read_y, backfill_color, display);
+	        vid_set_pixel(read_x, read_y, backfill_color);
         }
       }
     }
@@ -181,7 +181,7 @@ int vid_print_char (int horiz_offset, int vert_offset, int color, char character
     for (j = 0; j < 8; j++) {
       //If the font table says the pixel in this location is on for this character, then set it.
       if (char_row & (((unsigned char)0x80) >> j)) {
-        vid_set_pixel((horiz_offset + j), (vert_offset + i), color, display); // plot the pixel
+        vid_set_pixel((horiz_offset + j), (vert_offset + i), color); // plot the pixel
       }
     }
   }
@@ -199,7 +199,7 @@ int vid_print_char (int horiz_offset, int vert_offset, int color, char character
 *
 ******************************************************************/
 
-void vid_set_pixel(int horiz, int vert, unsigned int color, alt_video_display* display)
+void vid_set_pixel(int horiz, int vert, unsigned int color)
 {
 	alt_u16 color16;
 
@@ -222,7 +222,7 @@ short vid_get_pixel(int horiz, int vert, alt_video_display* display)
 {
 	printf("vid_get_pixel is not implemented\r\n");
 	/*LCD_ReadPoint(horiz, vert);*/
-
+	return 0;
 }
 
 
@@ -243,7 +243,7 @@ void vid_paint_block (int Hstart,int Vstart, int Hend, int Vend, int color, alt_
 	int x,y;
 	for(y=Vstart;y<Vend;y++){
 		for(x=Hstart;x<Hend;x++){
-			vid_set_pixel(x, y, color, display);
+			vid_set_pixel(x, y, color);
 		}
 	}
 }
@@ -260,7 +260,7 @@ void vid_draw_horiz_line (short Hstart, short Hend, int V, int color, alt_video_
 {
 	int x;
 	for(x=Hstart;x<Hend;x++){
-		vid_set_pixel(x, V, color, display);
+		vid_set_pixel(x, V, color);
 	}
 }
 
@@ -355,7 +355,7 @@ void vid_draw_sloped_line( unsigned short horiz_start,
     // Process the line, one horizontal point at at time
     for (; horiz_delta >= 0; horiz_delta--) {
       // plot the pixel
-      vid_set_pixel(horiz_start, vert_start, color, display);
+      vid_set_pixel(horiz_start, vert_start, color);
       // If we're moving both up and right
       if (P > 0) {
         horiz_start+=horiz_incr;
@@ -375,7 +375,7 @@ void vid_draw_sloped_line( unsigned short horiz_start,
     // Process the line, one vertical point at at time
     for (; vert_delta>=0; vert_delta--) {
       // plot the pixel
-      vid_set_pixel(horiz_start, vert_start, color, display);
+      vid_set_pixel(horiz_start, vert_start, color);
       // If we're moving both up and right
       if (P > 0) {
         horiz_start+=horiz_incr;
@@ -527,22 +527,22 @@ void vid_round_corner_points( int cx, int cy, int x, int y,
     // If we're directly above, below, left and right of center (0 degrees), plot those 4 pixels
     if (x == 0) {
         // bottom
-        vid_set_pixel(cx, cy + y + straight_height, color, display);
-        vid_set_pixel(cx + straight_width, cy + y + straight_height, color, display);
+        vid_set_pixel(cx, cy + y + straight_height, color);
+        vid_set_pixel(cx + straight_width, cy + y + straight_height, color);
         // top
-        vid_set_pixel(cx, cy - y, color, display);
-        vid_set_pixel(cx + straight_width, cy - y, color, display);
+        vid_set_pixel(cx, cy - y, color);
+        vid_set_pixel(cx + straight_width, cy - y, color);
 
         if(fill) {
           vid_draw_line(cx - y, cy, cx + y + straight_width, cy, 1, color, display);
           vid_draw_line(cx - y, cy + straight_height, cx + y + straight_width, cy + straight_height, 1, color, display);
         } else {
           //right
-          vid_set_pixel(cx + y + straight_width, cy, color, display);
-          vid_set_pixel(cx + y + straight_width, cy + straight_height, color, display);
+          vid_set_pixel(cx + y + straight_width, cy, color);
+          vid_set_pixel(cx + y + straight_width, cy + straight_height, color);
           //left
-          vid_set_pixel(cx - y, cy, color, display);
-          vid_set_pixel(cx - y, cy + straight_height, color, display);
+          vid_set_pixel(cx - y, cy, color);
+          vid_set_pixel(cx - y, cy + straight_height, color);
         }
 
     } else
@@ -553,10 +553,10 @@ void vid_round_corner_points( int cx, int cy, int x, int y,
         vid_draw_line(cx - x, cy - y, cx + x + straight_width, cy - y, 1, color, display); // upper
         
       } else {
-        vid_set_pixel(cx + x + straight_width, cy + y + straight_height, color, display); // bottom right
-        vid_set_pixel(cx - x, cy + y + straight_height, color, display); // bottom left
-        vid_set_pixel(cx + x + straight_width, cy - y, color, display); // top right
-        vid_set_pixel(cx - x, cy - y, color, display); // top left
+        vid_set_pixel(cx + x + straight_width, cy + y + straight_height, color); // bottom right
+        vid_set_pixel(cx - x, cy + y + straight_height, color); // bottom left
+        vid_set_pixel(cx + x + straight_width, cy - y, color); // top right
+        vid_set_pixel(cx - x, cy - y, color); // top left
       }
     } else
     // If we're between 0 and 45 degrees plot 8 pixels.
@@ -567,14 +567,14 @@ void vid_round_corner_points( int cx, int cy, int x, int y,
           vid_draw_line(cx - y, cy - x, cx + y + straight_width, cy - x, 1, color, display);
           vid_draw_line(cx - x, cy - y, cx + x + straight_width, cy - y, 1, color, display);
         } else {
-          vid_set_pixel(cx + x + straight_width, cy + y + straight_height, color, display);
-          vid_set_pixel(cx - x, cy + y + straight_height, color, display);
-          vid_set_pixel(cx + x + straight_width, cy - y, color, display);
-          vid_set_pixel(cx - x, cy - y, color, display);
-          vid_set_pixel(cx + y + straight_width, cy + x + straight_height, color, display);
-          vid_set_pixel(cx - y, cy + x + straight_height, color, display);
-          vid_set_pixel(cx + y + straight_width, cy - x, color, display);
-          vid_set_pixel(cx - y, cy - x, color, display);
+          vid_set_pixel(cx + x + straight_width, cy + y + straight_height, color);
+          vid_set_pixel(cx - x, cy + y + straight_height, color);
+          vid_set_pixel(cx + x + straight_width, cy - y, color);
+          vid_set_pixel(cx - x, cy - y, color);
+          vid_set_pixel(cx + y + straight_width, cy + x + straight_height, color);
+          vid_set_pixel(cx - y, cy + x + straight_height, color);
+          vid_set_pixel(cx + y + straight_width, cy - x, color);
+          vid_set_pixel(cx - y, cy - x, color);
         }
     }
 }

@@ -15,7 +15,7 @@ void GUI_ShowWelcome(alt_video_display *pDisplay){
 	x = 7;
 	y = pDisplay->height / 2 - 10;
 
-	vid_print_string_alpha(x, y, BLUE_24, BLACK_24, tahomabold_32, pDisplay, "Math Training");
+	vid_print_string_alpha(x, y, BLUE_24, BLACK_24, tahomabold_32, "Math Training");
 
 }
 
@@ -68,12 +68,12 @@ void GUI_DeskDraw(alt_video_display *pDisplay, DESK_INFO *pDeskInfo){
 	//disegno il pulsante di clear
 	RectCopy(&rc, &(pDeskInfo->clear));
 	vid_draw_box (rc.left, rc.top, rc.right, rc.bottom, RED_24, DO_FILL, pDisplay);
-	vid_print_string_alpha(rc.left+30, rc.top+(RectHeight(&rc)-22)/2, WHITE_24, RED_24, tahomabold_20, pDisplay, "Clear");
+	vid_print_string_alpha(rc.left+30, rc.top+(RectHeight(&rc)-22)/2, WHITE_24, RED_24, tahomabold_20, "Clear");
 
 	//disegno il pulsante di enter
 	RectCopy(&rc, &(pDeskInfo->enter));
 	vid_draw_box (rc.left, rc.top, rc.right, rc.bottom, GREEN, DO_FILL, pDisplay);
-	vid_print_string_alpha(rc.left+30, rc.top+(RectHeight(&rc)-22)/2, BLACK_24, GREEN, tahomabold_20, pDisplay, "Done");
+	vid_print_string_alpha(rc.left+30, rc.top+(RectHeight(&rc)-22)/2, BLACK_24, GREEN, tahomabold_20, "Done");
 
 	//disegno il campo expression
 	RectCopy(&rc, &(pDeskInfo->expression));
@@ -86,13 +86,54 @@ void GUI_DeskDraw(alt_video_display *pDisplay, DESK_INFO *pDeskInfo){
 }
 
 
-void GUI_ClearPaintArea(alt_video_display *pDisplay, DESK_INFO *pDeskInfo){
+void GUI_ClearRect(RECT_ID rect, DESK_INFO *pDeskInfo, alt_video_display *pDisplay){
     RECT rc;
-    RectCopy(&rc, &pDeskInfo->rcPaint);
-    RectInflate(&rc, -1, -1);
-    vid_draw_box (rc.left, rc.top, rc.right, rc.bottom, BLACK_24, DO_FILL, pDisplay);
+    switch(rect){
+    	case RECT_PAINT:
+    		RectCopy(&rc, &pDeskInfo->rcPaint);
+    		RectInflate(&rc, -1, -1);
+    		vid_draw_box (rc.left, rc.top, rc.right, rc.bottom, BLACK_24, DO_FILL, pDisplay);
+    		break;
+    	case RECT_EXP:
+    		RectCopy(&rc, &pDeskInfo->expression);
+    		vid_draw_box (rc.left, rc.top, rc.right, rc.bottom, WHITE_24, DO_FILL, pDisplay);
+    		break;
+    	case BTN_ENTER:
+    		RectCopy(&rc, &pDeskInfo->enter);
+    		vid_draw_box (rc.left, rc.top, rc.right, rc.bottom, GREEN, DO_FILL, pDisplay);
+    		break;
+    	case BTN_RESULT:
+    		RectCopy(&rc, &pDeskInfo->result);
+    		vid_draw_box (rc.left, rc.top, rc.right, rc.bottom, WHITE_24, DO_FILL, pDisplay);
+    		break;
+    	default:
+    		break;
+    }
 }
 
+void Print (RECT_ID rect, DESK_INFO desk, char string[]){
+	switch(rect){
+		case BTN_ENTER:
+			vid_print_string_alpha(desk.enter.left+30, desk.enter.top+9, BLACK_24, GREEN, tahomabold_20, string);
+			break;
+		case RECT_PAINT:
+			if(strcmp(string, "Nope")==0)
+				vid_print_string_alpha(desk.rcPaint.left+75, desk.rcPaint.top+80, RED_24, BLACK_24, tahomabold_32, string);
+			else if(strcmp(string, "Nice")==0)
+				vid_print_string_alpha(desk.rcPaint.left+75, desk.rcPaint.top+80, GREEN, BLACK_24, tahomabold_32, string);
+			else
+				vid_print_string_alpha(desk.rcPaint.left+30, desk.rcPaint.top+80, PINK_24, BLACK_24, tahomabold_32, string);
+			break;
+		case RECT_EXP:
+			vid_print_string_alpha(desk.expression.left+30, desk.expression.top+9, BLACK_24, WHITE_24, tahomabold_20, string);
+			break;
+		case BTN_NEWGAME:
+			vid_print_string_alpha(desk.expression.left+10, desk.expression.top+9, BLACK_24, YELLOW_24, tahomabold_20, string);
+			break;
+		default:
+			break;
+	}
+}
 
 void Update_img(POINT pt, bool* img, DESK_INFO desk){
 	int x_start = pt.x-DOT_SIZE;
@@ -140,7 +181,6 @@ void GUI(alt_video_display *pDisplay, DESK_INFO *DeskInfo, TOUCH_HANDLE *pTouch)
 	vid_clean_screen(pDisplay, BLACK_24);
 	GUI_ShowWelcome(pDisplay);
 	usleep(1*1000*1000);
-	vid_clean_screen(pDisplay, BLACK_24);
 
     // clean screen
     vid_clean_screen(pDisplay, BLACK_24);
@@ -152,15 +192,15 @@ void GUI(alt_video_display *pDisplay, DESK_INFO *DeskInfo, TOUCH_HANDLE *pTouch)
 
 void ShowHelp (alt_video_display *Display, DESK_INFO *DeskInfo, TOUCH_HANDLE *pTouch){
 	vid_clean_screen(Display, BLUE_24);
-	vid_print_string_alpha(30, 10, WHITE_24, BLUE_24, tahomabold_20, Display, "How to...");
-	vid_print_string_alpha(30, 40, WHITE_24, BLUE_24, tahomabold_20, Display, ">Draw digit");
-	vid_print_string_alpha(30, 70, WHITE_24, BLUE_24, tahomabold_20, Display, ">Enter to check");
-	vid_print_string_alpha(30, 100, WHITE_24, BLUE_24, tahomabold_20, Display, "  clear otherwise");
-	vid_print_string_alpha(30, 130, WHITE_24, BLUE_24, tahomabold_20, Display, ">Touch result");
-	vid_print_string_alpha(30, 160, WHITE_24, BLUE_24, tahomabold_20, Display, "  to validate digit");
-	vid_print_string_alpha(30, 190, WHITE_24, BLUE_24, tahomabold_20, Display, "  clear otherwise");
-	vid_print_string_alpha(30, 220, WHITE_24, BLUE_24, tahomabold_20, Display, ">Done to confirm");
-	vid_print_string_alpha(30, 250, WHITE_24, BLUE_24, tahomabold_20, Display, ">New Game");
+	vid_print_string_alpha(30, 10, WHITE_24, BLUE_24, tahomabold_20, "How to...");
+	vid_print_string_alpha(30, 40, WHITE_24, BLUE_24, tahomabold_20, ">Draw digit");
+	vid_print_string_alpha(30, 70, WHITE_24, BLUE_24, tahomabold_20, ">Enter to check");
+	vid_print_string_alpha(30, 100, WHITE_24, BLUE_24, tahomabold_20, "  clear otherwise");
+	vid_print_string_alpha(30, 130, WHITE_24, BLUE_24, tahomabold_20, ">Touch result");
+	vid_print_string_alpha(30, 160, WHITE_24, BLUE_24, tahomabold_20, "  to validate digit");
+	vid_print_string_alpha(30, 190, WHITE_24, BLUE_24, tahomabold_20, "  clear otherwise");
+	vid_print_string_alpha(30, 220, WHITE_24, BLUE_24, tahomabold_20, ">Done to confirm");
+	vid_print_string_alpha(30, 250, WHITE_24, BLUE_24, tahomabold_20, ">New Game");
 	while(SLIDERS_DATA_REG & 0x01){
 
 	};

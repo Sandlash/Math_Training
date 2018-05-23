@@ -11,6 +11,7 @@
 typedef struct {
 	int value1, value2, answer;
 	char operator;
+	char string[7];
 }expression;
 
 expression NewExpression();

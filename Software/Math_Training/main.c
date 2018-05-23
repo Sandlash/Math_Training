@@ -23,12 +23,9 @@
  
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <time.h>
 
-#include "src/mnist-utils.h"
 #include "src/1lnn.h"
-
 #include "src/LCD.h"
 #include "src/gui.h"
 #include "src/touch_spi.h"
@@ -45,6 +42,7 @@ typedef enum{
 	FINISHED,
 	NEW_GAME
 }STATUS;
+
 
 int main() {
 	STATUS status=NO_IMG;
@@ -100,25 +98,28 @@ int main() {
    RectCopy(&rcTouch, &DeskInfo.rcPaint);
    RectInflate(&rcTouch, -DOT_SIZE-2, -DOT_SIZE-2);
 
-
    exp=NewExpression();
-   char expression[] = {exp.value1/10==0 ? '_':(char)(exp.value1/10+48),
-      									 (char)(exp.value1%10+48),
-      									 exp.operator,
-      									 exp.value2/10==0 ? '_':(char)(exp.value2/10+48),
-      									 (char)(exp.value2%10+48), '=', '\0'};
-   vid_print_string_alpha(DeskInfo.expression.left+30, DeskInfo.expression.top+9, BLACK_24, WHITE_24, tahomabold_20, &Display, expression);
+   Print(RECT_EXP, DeskInfo, exp.string);
 
    while(1){
 	   if(SLIDERS_DATA_REG & 0x01){
 		   ShowHelp(&Display, &DeskInfo, pTouch);
-		   //exp=NewExpression();
-		   char expression[] = {exp.value1/10==0 ? '_':(char)(exp.value1/10+48),
-		      									 (char)(exp.value1%10+48),
-		      									 exp.operator,
-		      									 exp.value2/10==0 ? '_':(char)(exp.value2/10+48),
-		      									 (char)(exp.value2%10+48), '=', '\0'};
-		   vid_print_string_alpha(DeskInfo.expression.left+30, DeskInfo.expression.top+9, BLACK_24, WHITE_24, tahomabold_20, &Display, expression);
+		   Print(RECT_EXP, DeskInfo, exp.string);
+		   writing=FALSE;
+		   red_digit=FALSE;
+		   for(int n=0; n<digits; n++)
+		   	   vid_print_char_alpha(DeskInfo.result.left+20+13*n, DeskInfo.result.top+9, BLACK_24, (char)(result[n]+48), WHITE_24, tahomabold_20);
+
+		   if(status==NEW_GAME){
+			   vid_draw_box (DeskInfo.expression.left, DeskInfo.expression.top, DeskInfo.expression.right, DeskInfo.expression.bottom, YELLOW_24, DO_FILL, &Display);
+			   Print(BTN_NEWGAME, DeskInfo, "New game!");
+			   if(answer==exp.answer && digits!=0)
+				   Print(RECT_PAINT, DeskInfo, "Nice");
+			   else
+					Print(RECT_PAINT, DeskInfo, "Nope");
+		   }
+		   if(status==CONFIRM)
+			   status=NO_IMG;
 	   }
 
    		if (Touch_GetXY(pTouch, &X, &Y)){
@@ -131,10 +132,9 @@ int main() {
    				vid_draw_circle(Pt.x, Pt.y, DOT_SIZE, WHITE_24, DO_FILL, &Display);
    				Update_img(Pt, img, DeskInfo);
    				if(writing==FALSE){
-   					vid_draw_box (DeskInfo.enter.left, DeskInfo.enter.top, DeskInfo.enter.right, DeskInfo.enter.bottom, GREEN, DO_FILL, &Display);
-   					vid_print_string_alpha(DeskInfo.enter.left+30, DeskInfo.enter.top+9, BLACK_24, GREEN, tahomabold_20, &Display, "Enter");
+   					GUI_ClearRect(BTN_ENTER, &DeskInfo, &Display);
+   					Print(BTN_ENTER, DeskInfo, "Enter");
    				}
-
    				writing=TRUE;
    			}
 
@@ -142,18 +142,21 @@ int main() {
    			else if (ButtonId == BTN_CLEAR){
    				if(status != NEW_GAME)
    					status=NO_IMG;
-   				GUI_ClearPaintArea(&Display, &DeskInfo);
+   				writing=FALSE;
+   				GUI_ClearRect(BTN_ENTER, &DeskInfo, &Display);
+   				Print(BTN_ENTER, DeskInfo, "Done");
+   				GUI_ClearRect(RECT_PAINT, &DeskInfo, &Display);
    				Touch_EmptyFifo(pTouch);
+   				for(int i=0; i<DRAW_WIDTH*DRAW_WIDTH; i++)
+   					img[i]=0;
 
 				if(red_digit){
-					vid_draw_box (DeskInfo.result.left, DeskInfo.result.top, DeskInfo.result.right, DeskInfo.result.bottom, WHITE_24, DO_FILL, &Display);
+					GUI_ClearRect(BTN_RESULT, &DeskInfo, &Display);
 					for(int n=0; n<digits; n++)
-						vid_print_char_alpha(DeskInfo.result.left+20+13*n, DeskInfo.result.top+9, BLACK_24, (char)(result[n]+48), WHITE_24, tahomabold_20, &Display);
+						vid_print_char_alpha(DeskInfo.result.left+20+13*n, DeskInfo.result.top+9, BLACK_24, (char)(result[n]+48), WHITE_24, tahomabold_20);
 				}
-				for(int i=0; i<DRAW_WIDTH*DRAW_WIDTH; i++)
-				   	img[i]=0;
-
    			}
+
 
    			/*se do conferma, avvio la rete neurale*/
    			else if (ButtonId == BTN_ENTER && status==NO_IMG){
@@ -173,18 +176,18 @@ int main() {
 							break;
    					}
 
-   	   				GUI_ClearPaintArea(&Display, &DeskInfo);
+   					GUI_ClearRect(RECT_PAINT, &DeskInfo, &Display);
    	   				if(answer==exp.answer && digits!=0)
-   	   					vid_print_string_alpha(DeskInfo.rcPaint.left+75, DeskInfo.rcPaint.top+90, GREEN, BLACK_24, tahomabold_32, &Display, "Nice");
+   	   					Print(RECT_PAINT, DeskInfo, "Nice");
    	   				else
-   	   					vid_print_string_alpha(DeskInfo.rcPaint.left+75, DeskInfo.rcPaint.top+80, RED_24, BLACK_24, tahomabold_32, &Display, "Nope");
+   	   					Print(RECT_PAINT, DeskInfo, "Nope");
    	   				status=FINISHED;
 				}
    				else{
    					if(digits>=3){
    						status=FINISHED;
-   	   	   				GUI_ClearPaintArea(&Display, &DeskInfo);
-   	   					vid_print_string_alpha(DeskInfo.rcPaint.left+30, DeskInfo.rcPaint.top+80, PINK_24, BLACK_24, tahomabold_32, &Display, "Un c'entra!");
+   						GUI_ClearRect(RECT_PAINT, &DeskInfo, &Display);
+   	   	   				Print(RECT_PAINT, DeskInfo, "Un c'entra!");
    					}
    					else{
 						Resize_image(img, &mnist_img);				//catturo l'immagine da mandare alla rete neurale
@@ -195,51 +198,50 @@ int main() {
    				}
    			}
 
+
    			else if(ButtonId==BTN_RESULT && status==CONFIRM){
+   				status=NO_IMG;
    				writing=FALSE;
 				red_digit=FALSE;
-	   			GUI_ClearPaintArea(&Display, &DeskInfo);
-				vid_print_char_alpha(DeskInfo.result.left+20+13*digits, DeskInfo.result.top+9, BLACK_24, (char)(result[digits]+48), WHITE_24, tahomabold_20, &Display);
+
+				GUI_ClearRect(RECT_PAINT, &DeskInfo, &Display);
+				vid_print_char_alpha(DeskInfo.result.left+20+13*digits, DeskInfo.result.top+9, BLACK_24, (char)(result[digits]+48), WHITE_24, tahomabold_20);
+				GUI_ClearRect(BTN_ENTER, &DeskInfo, &Display);
+				Print(BTN_ENTER, DeskInfo, "Done");
 				digits++;
-				status=NO_IMG;
-				vid_draw_box (DeskInfo.enter.left, DeskInfo.enter.top, DeskInfo.enter.right, DeskInfo.enter.bottom, GREEN, DO_FILL, &Display);
-				vid_print_string_alpha(DeskInfo.enter.left+30, DeskInfo.enter.top+9, BLACK_24, GREEN, tahomabold_20, &Display, "Done");
    			}
+
 
    			else if(ButtonId==BTN_NEWGAME && status==NEW_GAME){
    				status=NO_IMG;
+   				result[0]=0;
+				result[1]=0;
+				result[2]=0;
+				digits=0;
+
    				exp=NewExpression();
-   				char expression[] = {exp.value1/10==0 ? '_':(char)(exp.value1/10+48),
-   									 (char)(exp.value1%10+48),
-   									 exp.operator,
-   									 exp.value2/10==0 ? '_':(char)(exp.value2/10+48),
-   									 (char)(exp.value2%10+48), '=', '\0'};
-   				vid_draw_box (DeskInfo.expression.left, DeskInfo.expression.top, DeskInfo.expression.right, DeskInfo.expression.bottom, WHITE_24, DO_FILL, &Display);
-   				vid_print_string_alpha(DeskInfo.expression.left+30, DeskInfo.expression.top+9, BLACK_24, WHITE_24, tahomabold_20, &Display, expression);
-   				vid_draw_box (DeskInfo.result.left, DeskInfo.result.top, DeskInfo.result.right, DeskInfo.result.bottom, WHITE_24, DO_FILL, &Display);
-	   			GUI_ClearPaintArea(&Display, &DeskInfo);
-	   			result[0]=0;
-	   			result[1]=0;
-	   			result[2]=0;
-	   			digits=0;
+   				GUI_ClearRect(RECT_EXP, &DeskInfo, &Display);
+   				Print(RECT_EXP, DeskInfo, exp.string);
+   				GUI_ClearRect(BTN_RESULT, &DeskInfo, &Display);
+   				GUI_ClearRect(RECT_PAINT, &DeskInfo, &Display);
    			}
 
    		} // if touch
 
    		if(status==IMG_READY){
-   			result[digits]=testLayer(&nn_layer, &mnist_img);
-   			/*visualizzo in rosso la cifra intuita dalla rete neurale*/
-   			vid_print_char_alpha(DeskInfo.result.left+20+13*digits, DeskInfo.result.top+9, RED_24, (char)(result[digits]+48), WHITE_24, tahomabold_20, &Display);
    			status=CONFIRM;
    			red_digit=TRUE;
+   			result[digits]=testLayer(&nn_layer, &mnist_img);
+   			/*visualizzo in rosso la cifra intuita dalla rete neurale*/
+   			vid_print_char_alpha(DeskInfo.result.left+20+13*digits, DeskInfo.result.top+9, RED_24, (char)(result[digits]+48), WHITE_24, tahomabold_20);
    		}
 
    		if(status==FINISHED){
+   			status=NEW_GAME;
    			red_digit=FALSE;
    			writing=FALSE;
-   			status=NEW_GAME;
 			vid_draw_box (DeskInfo.expression.left, DeskInfo.expression.top, DeskInfo.expression.right, DeskInfo.expression.bottom, YELLOW_24, DO_FILL, &Display);
-			vid_print_string_alpha(DeskInfo.expression.left+10, DeskInfo.expression.top+9, BLACK_24, YELLOW_24, tahomabold_20, &Display, "New game!");
+			Print(BTN_NEWGAME, DeskInfo, "New game!");
    		}
 
    } // while

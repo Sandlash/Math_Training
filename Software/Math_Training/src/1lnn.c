@@ -9,24 +9,8 @@
 #include <string.h>
 #include <math.h>
 
-#include "mnist-utils.h"
 #include "1lnn.h"
-#include "weights.h"
-
-
-
-/**
- * @details Returns an output vector with targetIndex set to 1, all others to 0
- */
-
-Vector getTargetOutput(int targetIndex){
-    Vector v;
-    for (int i=0; i<NUMBER_OF_OUTPUT_CELLS; i++){
-        v.val[i] = (i==targetIndex) ? 1 : 0;
-    }
-    return v;
-}
-
+#include "weights_1lnn.h"
 
 
 
@@ -76,8 +60,6 @@ uint8_t getLayerPrediction(Layer *l){
 }
 
 
-
-
 /**
  * @details Creates an input vector of length NUMBER_OF_INPUT_CELLS
  * of a given MNIST image, setting input vector cells to [0,1]
@@ -92,8 +74,6 @@ void setCellInput(Cell *c, MNIST_Image *img){
 
     }
 }
-
-
 
 
 /**
@@ -111,54 +91,6 @@ void calcCellOutput(Cell *c){
     
     c->output /= NUMBER_OF_INPUT_CELLS;             // normalize output (0-1)
 }
-
-
-
-
-/**
- * @details Returns the difference between a target value and the cell's ouput
- */
-
-double getCellError(Cell *c, int target){
-
-    double err = target - c->output;
-
-    return err;
-}
-
-
-
-
-/**
- * @details Updates a cell's weights based on given error and LEARNING_RATE
- */
-
-void updateCellWeights(Cell *c, double err){
-    
-    for (int i=0; i<NUMBER_OF_INPUT_CELLS; i++){
-        c->weight[i] += LEARNING_RATE * c->input[i] * err;
-    }
-}
-
-
-
-
-/**
- * @details Performs the training algorithm:
- * feeding input, calculate output, calculate error, update weights)
- */
-
-void trainCell(Cell *c, MNIST_Image *img, int target){
-    
-    setCellInput(c, img);
-    calcCellOutput(c);
-    
-    // learning (by updating the weights)
-    double err = getCellError(c, target);
-    updateCellWeights(c, err);
-}
-
-
 
 
 /**

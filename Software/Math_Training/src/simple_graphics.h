@@ -86,7 +86,7 @@ int vid_print_char (int horiz_offset, int vert_offset, int color, char character
 
 void vid_draw_line(int horiz_start, int vert_start, int horiz_end, int vert_end, int width, int color, alt_video_display* display);
 
-void vid_set_pixel(int horiz, int vert, unsigned int color, alt_video_display* display);
+void vid_set_pixel(int horiz, int vert, unsigned int color);
 
 short vid_get_pixel(int horiz, int vert, alt_video_display* display);
 
@@ -147,7 +147,6 @@ int vid_print_string_alpha( int horiz_offset,
                             int color,
                             int background_color,
                             struct abc_font_struct font[],
-                            alt_video_display * display,
                             char string[]);
 
 // functions used by vid_print_string_alpha
@@ -184,8 +183,7 @@ int vid_print_char_alpha (int horiz_offset,
                           int color,
                           char character,
                           int background_color,
-                          struct abc_font_struct font[],
-                          alt_video_display * display);
+                          struct abc_font_struct font[]);
 
 int vid_string_pixel_length_alpha( struct abc_font_struct font[], char string[] );                              
                           
