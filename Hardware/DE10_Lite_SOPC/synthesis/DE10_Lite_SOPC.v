@@ -7,7 +7,6 @@ module DE10_Lite_SOPC (
 		input  wire        clk_clk,                                          //                                       clk.clk
 		output wire        clk_sdram_clk,                                    //                                 clk_sdram.clk
 		output wire        lcd_reset_n_external_connection_export,           //           lcd_reset_n_external_connection.export
-		output wire [9:0]  leds_export,                                      //                                      leds.export
 		output wire        lt24_controller_0_conduit_end_export_cs,          //             lt24_controller_0_conduit_end.export_cs
 		output wire [15:0] lt24_controller_0_conduit_end_export_data,        //                                          .export_data
 		output wire        lt24_controller_0_conduit_end_export_rd,          //                                          .export_rd
@@ -30,12 +29,11 @@ module DE10_Lite_SOPC (
 		input  wire        touch_panel_spi_external_MISO,                    //                  touch_panel_spi_external.MISO
 		output wire        touch_panel_spi_external_MOSI,                    //                                          .MOSI
 		output wire        touch_panel_spi_external_SCLK,                    //                                          .SCLK
-		output wire        touch_panel_spi_external_SS_n,                    //                                          .SS_n
-		output wire        vga_clk_clk                                       //                                   vga_clk.clk
+		output wire        touch_panel_spi_external_SS_n                     //                                          .SS_n
 	);
 
 	wire         system_pll_c0_clk;                                             // system_pll:c0 -> [irq_mapper:clk, irq_synchronizer:sender_clk, irq_synchronizer_001:sender_clk, irq_synchronizer_002:sender_clk, jtag_uart_0:clk, mm_clock_crossing_bridge_0:s0_clk, mm_interconnect_0:system_pll_c0_clk, nios2_gen2:clk, rst_controller_002:clk, sdram:clk]
-	wire         system_pll_c3_clk;                                             // system_pll:c3 -> [LCD_reset_n:clk, LEDs:clk, irq_synchronizer:receiver_clk, irq_synchronizer_001:receiver_clk, irq_synchronizer_002:receiver_clk, mm_clock_crossing_bridge_0:m0_clk, mm_interconnect_0:system_pll_c3_clk, push_button:clk, rst_controller:clk, sliders:clk, sysid_qsys_0:clock, timer_0:clk, touch_panel_busy:clk, touch_panel_pen_irq_n:clk, touch_panel_spi:clk]
+	wire         system_pll_c3_clk;                                             // system_pll:c3 -> [LCD_reset_n:clk, irq_synchronizer:receiver_clk, irq_synchronizer_001:receiver_clk, irq_synchronizer_002:receiver_clk, mm_clock_crossing_bridge_0:m0_clk, mm_interconnect_0:system_pll_c3_clk, push_button:clk, rst_controller:clk, sliders:clk, sysid_qsys_0:clock, timer_0:clk, touch_panel_busy:clk, touch_panel_pen_irq_n:clk, touch_panel_spi:clk]
 	wire  [31:0] nios2_gen2_data_master_readdata;                               // mm_interconnect_0:nios2_gen2_data_master_readdata -> nios2_gen2:d_readdata
 	wire         nios2_gen2_data_master_waitrequest;                            // mm_interconnect_0:nios2_gen2_data_master_waitrequest -> nios2_gen2:d_waitrequest
 	wire         nios2_gen2_data_master_debugaccess;                            // nios2_gen2:debug_mem_slave_debugaccess_to_roms -> mm_interconnect_0:nios2_gen2_data_master_debugaccess
@@ -119,11 +117,6 @@ module DE10_Lite_SOPC (
 	wire   [1:0] mm_interconnect_0_sliders_s1_address;                          // mm_interconnect_0:sliders_s1_address -> sliders:address
 	wire  [31:0] mm_interconnect_0_push_button_s1_readdata;                     // push_button:readdata -> mm_interconnect_0:push_button_s1_readdata
 	wire   [1:0] mm_interconnect_0_push_button_s1_address;                      // mm_interconnect_0:push_button_s1_address -> push_button:address
-	wire         mm_interconnect_0_leds_s1_chipselect;                          // mm_interconnect_0:LEDs_s1_chipselect -> LEDs:chipselect
-	wire  [31:0] mm_interconnect_0_leds_s1_readdata;                            // LEDs:readdata -> mm_interconnect_0:LEDs_s1_readdata
-	wire   [1:0] mm_interconnect_0_leds_s1_address;                             // mm_interconnect_0:LEDs_s1_address -> LEDs:address
-	wire         mm_interconnect_0_leds_s1_write;                               // mm_interconnect_0:LEDs_s1_write -> LEDs:write_n
-	wire  [31:0] mm_interconnect_0_leds_s1_writedata;                           // mm_interconnect_0:LEDs_s1_writedata -> LEDs:writedata
 	wire  [31:0] mm_interconnect_0_touch_panel_busy_s1_readdata;                // touch_panel_busy:readdata -> mm_interconnect_0:touch_panel_busy_s1_readdata
 	wire   [1:0] mm_interconnect_0_touch_panel_busy_s1_address;                 // mm_interconnect_0:touch_panel_busy_s1_address -> touch_panel_busy:address
 	wire         mm_interconnect_0_touch_panel_pen_irq_n_s1_chipselect;         // mm_interconnect_0:touch_panel_pen_irq_n_s1_chipselect -> touch_panel_pen_irq_n:chipselect
@@ -145,7 +138,7 @@ module DE10_Lite_SOPC (
 	wire   [0:0] irq_synchronizer_001_receiver_irq;                             // touch_panel_spi:irq -> irq_synchronizer_001:receiver_irq
 	wire         irq_mapper_receiver3_irq;                                      // irq_synchronizer_002:sender_irq -> irq_mapper:receiver3_irq
 	wire   [0:0] irq_synchronizer_002_receiver_irq;                             // touch_panel_pen_irq_n:irq -> irq_synchronizer_002:receiver_irq
-	wire         rst_controller_reset_out_reset;                                // rst_controller:reset_out -> [LCD_reset_n:reset_n, LEDs:reset_n, irq_synchronizer:receiver_reset, irq_synchronizer_001:receiver_reset, irq_synchronizer_002:receiver_reset, mm_clock_crossing_bridge_0:m0_reset, mm_interconnect_0:mm_clock_crossing_bridge_0_m0_reset_reset_bridge_in_reset_reset, push_button:reset_n, sliders:reset_n, sysid_qsys_0:reset_n, timer_0:reset_n, touch_panel_busy:reset_n, touch_panel_pen_irq_n:reset_n, touch_panel_spi:reset_n]
+	wire         rst_controller_reset_out_reset;                                // rst_controller:reset_out -> [LCD_reset_n:reset_n, irq_synchronizer:receiver_reset, irq_synchronizer_001:receiver_reset, irq_synchronizer_002:receiver_reset, mm_clock_crossing_bridge_0:m0_reset, mm_interconnect_0:mm_clock_crossing_bridge_0_m0_reset_reset_bridge_in_reset_reset, push_button:reset_n, sliders:reset_n, sysid_qsys_0:reset_n, timer_0:reset_n, touch_panel_busy:reset_n, touch_panel_pen_irq_n:reset_n, touch_panel_spi:reset_n]
 	wire         nios2_gen2_debug_reset_request_reset;                          // nios2_gen2:debug_reset_request -> [rst_controller:reset_in1, rst_controller_001:reset_in1, rst_controller_002:reset_in1]
 	wire         rst_controller_001_reset_out_reset;                            // rst_controller_001:reset_out -> [LT24_Controller_0:reset_n, mm_interconnect_0:system_pll_inclk_interface_reset_reset_bridge_in_reset_reset, system_pll:reset]
 	wire         rst_controller_002_reset_out_reset;                            // rst_controller_002:reset_out -> [irq_mapper:reset, irq_synchronizer:sender_reset, irq_synchronizer_001:sender_reset, irq_synchronizer_002:sender_reset, jtag_uart_0:rst_n, mm_clock_crossing_bridge_0:s0_reset, mm_interconnect_0:nios2_gen2_reset_reset_bridge_in_reset_reset, nios2_gen2:reset_n, rst_translator:in_reset, sdram:reset_n]
@@ -160,17 +153,6 @@ module DE10_Lite_SOPC (
 		.chipselect (mm_interconnect_0_lcd_reset_n_s1_chipselect), //                    .chipselect
 		.readdata   (mm_interconnect_0_lcd_reset_n_s1_readdata),   //                    .readdata
 		.out_port   (lcd_reset_n_external_connection_export)       // external_connection.export
-	);
-
-	DE10_Lite_SOPC_LEDs leds (
-		.clk        (system_pll_c3_clk),                    //                 clk.clk
-		.reset_n    (~rst_controller_reset_out_reset),      //               reset.reset_n
-		.address    (mm_interconnect_0_leds_s1_address),    //                  s1.address
-		.write_n    (~mm_interconnect_0_leds_s1_write),     //                    .write_n
-		.writedata  (mm_interconnect_0_leds_s1_writedata),  //                    .writedata
-		.chipselect (mm_interconnect_0_leds_s1_chipselect), //                    .chipselect
-		.readdata   (mm_interconnect_0_leds_s1_readdata),   //                    .readdata
-		.out_port   (leds_export)                           // external_connection.export
 	);
 
 	LT24_Controller lt24_controller_0 (
@@ -323,11 +305,11 @@ module DE10_Lite_SOPC (
 		.writedata          (mm_interconnect_0_system_pll_pll_slave_writedata), //                      .writedata
 		.c0                 (system_pll_c0_clk),                                //                    c0.clk
 		.c1                 (clk_sdram_clk),                                    //                    c1.clk
-		.c2                 (),                                                 //                    c2.clk
 		.c3                 (system_pll_c3_clk),                                //                    c3.clk
-		.c4                 (vga_clk_clk),                                      //                    c4.clk
 		.scandone           (),                                                 //           (terminated)
 		.scandataout        (),                                                 //           (terminated)
+		.c2                 (),                                                 //           (terminated)
+		.c4                 (),                                                 //           (terminated)
 		.areset             (1'b0),                                             //           (terminated)
 		.locked             (),                                                 //           (terminated)
 		.phasedone          (),                                                 //           (terminated)
@@ -430,11 +412,6 @@ module DE10_Lite_SOPC (
 		.LCD_reset_n_s1_readdata                                         (mm_interconnect_0_lcd_reset_n_s1_readdata),                     //                                                          .readdata
 		.LCD_reset_n_s1_writedata                                        (mm_interconnect_0_lcd_reset_n_s1_writedata),                    //                                                          .writedata
 		.LCD_reset_n_s1_chipselect                                       (mm_interconnect_0_lcd_reset_n_s1_chipselect),                   //                                                          .chipselect
-		.LEDs_s1_address                                                 (mm_interconnect_0_leds_s1_address),                             //                                                   LEDs_s1.address
-		.LEDs_s1_write                                                   (mm_interconnect_0_leds_s1_write),                               //                                                          .write
-		.LEDs_s1_readdata                                                (mm_interconnect_0_leds_s1_readdata),                            //                                                          .readdata
-		.LEDs_s1_writedata                                               (mm_interconnect_0_leds_s1_writedata),                           //                                                          .writedata
-		.LEDs_s1_chipselect                                              (mm_interconnect_0_leds_s1_chipselect),                          //                                                          .chipselect
 		.LT24_Controller_0_avalon_slave_0_address                        (mm_interconnect_0_lt24_controller_0_avalon_slave_0_address),    //                          LT24_Controller_0_avalon_slave_0.address
 		.LT24_Controller_0_avalon_slave_0_write                          (mm_interconnect_0_lt24_controller_0_avalon_slave_0_write),      //                                                          .write
 		.LT24_Controller_0_avalon_slave_0_writedata                      (mm_interconnect_0_lt24_controller_0_avalon_slave_0_writedata),  //                                                          .writedata

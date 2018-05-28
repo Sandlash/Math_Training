@@ -3,7 +3,7 @@
 # Machine generated for CPU 'nios2_gen2' in SOPC Builder design 'DE10_Lite_SOPC'
 # SOPC Builder design path: C:/Users/emilio/UNI/Magistrale/Embedded/progetto/Math_Training/SopC/DE10_Lite_SOPC.sopcinfo
 #
-# Generated: Wed May 09 15:11:02 CEST 2018
+# Generated: Mon May 21 18:01:47 CEST 2018
 
 # DO NOT MODIFY THIS FILE
 #

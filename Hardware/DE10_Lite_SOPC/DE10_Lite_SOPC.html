@@ -67,7 +67,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
   </table>
   <table class="blueBar">
    <tr>
-    <td class="l">2018.05.09.15:01:52</td>
+    <td class="l">2018.05.21.18:04:09</td>
     <td class="r">Datasheet</td>
    </tr>
   </table>
@@ -92,9 +92,6 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
      <br/>All Components
      <br/>&#160;&#160;
      <a href="#module_LCD_reset_n"><b>LCD_reset_n</b>
-     </a> altera_avalon_pio 16.1
-     <br/>&#160;&#160;
-     <a href="#module_LEDs"><b>LEDs</b>
      </a> altera_avalon_pio 16.1
      <br/>&#160;&#160;
      <a href="#module_LT24_Controller_0"><b>LT24_Controller_0</b>
@@ -161,20 +158,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
    </tr>
    <tr>
     <td class="slaveb">s1&#160;</td>
-    <td class="addr"><span style="color:#989898">0x</span>01000090</td>
-    <td class="empty"></td>
-   </tr>
-   <tr>
-    <td class="slavemodule">&#160;
-     <a href="#module_LEDs"><b>LEDs</b>
-     </a>
-    </td>
-    <td class="empty"></td>
-    <td class="empty"></td>
-   </tr>
-   <tr>
-    <td class="slaveb">s1&#160;</td>
-    <td class="addr"><span style="color:#989898">0x</span>01000060</td>
+    <td class="addr"><span style="color:#989898">0x</span>01000080</td>
     <td class="empty"></td>
    </tr>
    <tr>
@@ -226,7 +210,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
    </tr>
    <tr>
     <td class="slaveb">s1&#160;</td>
-    <td class="addr"><span style="color:#989898">0x</span>01000070</td>
+    <td class="addr"><span style="color:#989898">0x</span>01000060</td>
     <td class="empty"></td>
    </tr>
    <tr>
@@ -252,7 +236,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
    </tr>
    <tr>
     <td class="slaveb">s1&#160;</td>
-    <td class="addr"><span style="color:#989898">0x</span>01000080</td>
+    <td class="addr"><span style="color:#989898">0x</span>01000070</td>
     <td class="empty"></td>
    </tr>
    <tr>
@@ -265,7 +249,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
    </tr>
    <tr>
     <td class="slaveb">control_slave&#160;</td>
-    <td class="addr"><span style="color:#989898">0x</span>010000a0</td>
+    <td class="addr"><span style="color:#989898">0x</span>01000090</td>
     <td class="empty"></td>
    </tr>
    <tr>
@@ -508,222 +492,6 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        <tr>
         <td class="parametername">DATA_WIDTH</td>
         <td class="parametervalue">1</td>
-       </tr>
-       <tr>
-        <td class="parametername">DO_TEST_BENCH_WIRING</td>
-        <td class="parametervalue">0</td>
-       </tr>
-       <tr>
-        <td class="parametername">DRIVEN_SIM_VALUE</td>
-        <td class="parametervalue">0</td>
-       </tr>
-       <tr>
-        <td class="parametername">EDGE_TYPE</td>
-        <td class="parametervalue">NONE</td>
-       </tr>
-       <tr>
-        <td class="parametername">FREQ</td>
-        <td class="parametervalue">10000000</td>
-       </tr>
-       <tr>
-        <td class="parametername">HAS_IN</td>
-        <td class="parametervalue">0</td>
-       </tr>
-       <tr>
-        <td class="parametername">HAS_OUT</td>
-        <td class="parametervalue">1</td>
-       </tr>
-       <tr>
-        <td class="parametername">HAS_TRI</td>
-        <td class="parametervalue">0</td>
-       </tr>
-       <tr>
-        <td class="parametername">IRQ_TYPE</td>
-        <td class="parametervalue">NONE</td>
-       </tr>
-       <tr>
-        <td class="parametername">RESET_VALUE</td>
-        <td class="parametervalue">0</td>
-       </tr>
-      </table>
-     </td>
-    </tr>
-   </table>
-  </div>
-  <a name="module_LEDs"> </a>
-  <div>
-   <hr/>
-   <h2>LEDs</h2>altera_avalon_pio v16.1
-   <br/>
-   <div class="greydiv">
-    <table class="connectionboxes">
-     <tr>
-      <td class="neighbor" rowspan="2">
-       <a href="#module_mm_clock_crossing_bridge_0">mm_clock_crossing_bridge_0</a>
-      </td>
-      <td class="from">m0&#160;&#160;</td>
-      <td class="main" rowspan="11">LEDs</td>
-     </tr>
-     <tr>
-      <td class="to">&#160;&#160;s1</td>
-     </tr>
-     <tr style="height:6px">
-      <td></td>
-     </tr>
-     <tr>
-      <td class="neighbor" rowspan="2">
-       <a href="#module_system_pll">system_pll</a>
-      </td>
-      <td class="from">c3&#160;&#160;</td>
-     </tr>
-     <tr>
-      <td class="to">&#160;&#160;clk</td>
-     </tr>
-     <tr style="height:6px">
-      <td></td>
-     </tr>
-     <tr>
-      <td class="neighbor" rowspan="2">
-       <a href="#module_clk_0">clk_0</a>
-      </td>
-      <td class="from">clk_reset&#160;&#160;</td>
-     </tr>
-     <tr>
-      <td class="to">&#160;&#160;reset</td>
-     </tr>
-     <tr style="height:6px">
-      <td></td>
-     </tr>
-     <tr>
-      <td class="neighbor" rowspan="2">
-       <a href="#module_nios2_gen2">nios2_gen2</a>
-      </td>
-      <td class="from">debug_reset_request&#160;&#160;</td>
-     </tr>
-     <tr>
-      <td class="to">&#160;&#160;reset</td>
-     </tr>
-    </table>
-   </div>
-   <br/>
-   <br/>
-   <table class="flowbox">
-    <tr>
-     <td class="parametersbox">
-      <h2>Parameters</h2>
-      <table>
-       <tr>
-        <td class="parametername">bitClearingEdgeCapReg</td>
-        <td class="parametervalue">false</td>
-       </tr>
-       <tr>
-        <td class="parametername">bitModifyingOutReg</td>
-        <td class="parametervalue">false</td>
-       </tr>
-       <tr>
-        <td class="parametername">captureEdge</td>
-        <td class="parametervalue">false</td>
-       </tr>
-       <tr>
-        <td class="parametername">direction</td>
-        <td class="parametervalue">Output</td>
-       </tr>
-       <tr>
-        <td class="parametername">edgeType</td>
-        <td class="parametervalue">RISING</td>
-       </tr>
-       <tr>
-        <td class="parametername">generateIRQ</td>
-        <td class="parametervalue">false</td>
-       </tr>
-       <tr>
-        <td class="parametername">irqType</td>
-        <td class="parametervalue">LEVEL</td>
-       </tr>
-       <tr>
-        <td class="parametername">resetValue</td>
-        <td class="parametervalue">0</td>
-       </tr>
-       <tr>
-        <td class="parametername">simDoTestBenchWiring</td>
-        <td class="parametervalue">false</td>
-       </tr>
-       <tr>
-        <td class="parametername">simDrivenValue</td>
-        <td class="parametervalue">0</td>
-       </tr>
-       <tr>
-        <td class="parametername">width</td>
-        <td class="parametervalue">10</td>
-       </tr>
-       <tr>
-        <td class="parametername">clockRate</td>
-        <td class="parametervalue">10000000</td>
-       </tr>
-       <tr>
-        <td class="parametername">derived_has_tri</td>
-        <td class="parametervalue">false</td>
-       </tr>
-       <tr>
-        <td class="parametername">derived_has_out</td>
-        <td class="parametervalue">true</td>
-       </tr>
-       <tr>
-        <td class="parametername">derived_has_in</td>
-        <td class="parametervalue">false</td>
-       </tr>
-       <tr>
-        <td class="parametername">derived_do_test_bench_wiring</td>
-        <td class="parametervalue">false</td>
-       </tr>
-       <tr>
-        <td class="parametername">derived_capture</td>
-        <td class="parametervalue">false</td>
-       </tr>
-       <tr>
-        <td class="parametername">derived_edge_type</td>
-        <td class="parametervalue">NONE</td>
-       </tr>
-       <tr>
-        <td class="parametername">derived_irq_type</td>
-        <td class="parametervalue">NONE</td>
-       </tr>
-       <tr>
-        <td class="parametername">derived_has_irq</td>
-        <td class="parametervalue">false</td>
-       </tr>
-       <tr>
-        <td class="parametername">deviceFamily</td>
-        <td class="parametervalue">UNKNOWN</td>
-       </tr>
-       <tr>
-        <td class="parametername">generateLegacySim</td>
-        <td class="parametervalue">false</td>
-       </tr>
-      </table>
-     </td>
-    </tr>
-   </table>&#160;&#160;
-   <table class="flowbox">
-    <tr>
-     <td class="parametersbox">
-      <h2>Software Assignments</h2>
-      <table>
-       <tr>
-        <td class="parametername">BIT_CLEARING_EDGE_REGISTER</td>
-        <td class="parametervalue">0</td>
-       </tr>
-       <tr>
-        <td class="parametername">BIT_MODIFYING_OUTPUT_REGISTER</td>
-        <td class="parametervalue">0</td>
-       </tr>
-       <tr>
-        <td class="parametername">CAPTURE</td>
-        <td class="parametervalue">0</td>
-       </tr>
-       <tr>
-        <td class="parametername">DATA_WIDTH</td>
-        <td class="parametervalue">10</td>
        </tr>
        <tr>
         <td class="parametername">DO_TEST_BENCH_WIRING</td>
@@ -1058,7 +826,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        <a href="#module_nios2_gen2">nios2_gen2</a>
       </td>
       <td class="from">data_master&#160;&#160;</td>
-      <td class="main" rowspan="42">mm_clock_crossing_bridge_0</td>
+      <td class="main" rowspan="39">mm_clock_crossing_bridge_0</td>
      </tr>
      <tr>
       <td class="to">&#160;&#160;s0</td>
@@ -1181,22 +949,6 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
       <td class="from">m0&#160;&#160;</td>
       <td class="neighbor" rowspan="2">
        <a href="#module_push_button">push_button</a>
-      </td>
-     </tr>
-     <tr>
-      <td></td>
-      <td></td>
-      <td class="to">&#160;&#160;s1</td>
-     </tr>
-     <tr style="height:6px">
-      <td></td>
-     </tr>
-     <tr>
-      <td></td>
-      <td></td>
-      <td class="from">m0&#160;&#160;</td>
-      <td class="neighbor" rowspan="2">
-       <a href="#module_LEDs">LEDs</a>
       </td>
      </tr>
      <tr>
@@ -1348,7 +1100,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        <a href="#module_system_pll">system_pll</a>
       </td>
       <td class="from">c0&#160;&#160;</td>
-      <td class="main" rowspan="70">nios2_gen2</td>
+      <td class="main" rowspan="67">nios2_gen2</td>
      </tr>
      <tr>
       <td class="to">&#160;&#160;clk</td>
@@ -1604,22 +1356,6 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
       <td></td>
       <td></td>
       <td class="from">debug_reset_request&#160;&#160;</td>
-     </tr>
-     <tr>
-      <td></td>
-      <td></td>
-      <td class="to">&#160;&#160;reset</td>
-     </tr>
-     <tr style="height:6px">
-      <td></td>
-     </tr>
-     <tr>
-      <td></td>
-      <td></td>
-      <td class="from">debug_reset_request&#160;&#160;</td>
-      <td class="neighbor" rowspan="2">
-       <a href="#module_LEDs">LEDs</a>
-      </td>
      </tr>
      <tr>
       <td></td>
@@ -2017,7 +1753,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        </tr>
        <tr>
         <td class="parametername">icache_size</td>
-        <td class="parametervalue">4096</td>
+        <td class="parametervalue">8192</td>
        </tr>
        <tr>
         <td class="parametername">fa_cache_line</td>
@@ -2053,7 +1789,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        </tr>
        <tr>
         <td class="parametername">dcache_size</td>
-        <td class="parametervalue">2048</td>
+        <td class="parametervalue">65536</td>
        </tr>
        <tr>
         <td class="parametername">dcache_tagramBlockType</td>
@@ -2301,7 +2037,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        </tr>
        <tr>
         <td class="parametername">dcache_size_derived</td>
-        <td class="parametervalue">2048</td>
+        <td class="parametervalue">65536</td>
        </tr>
        <tr>
         <td class="parametername">breakSlave_derived</td>
@@ -2405,7 +2141,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        </tr>
        <tr>
         <td class="parametername">dataSlaveMapParam</td>
-        <td class="parametervalue">&lt;address-map&gt;&lt;slave name='system_pll.pll_slave' start='0x0' end='0x10' type='altpll.pll_slave' /&gt;&lt;slave name='LT24_Controller_0.avalon_slave_0' start='0x10' end='0x18' type='LT24_Controller.avalon_slave_0' /&gt;&lt;slave name='jtag_uart_0.avalon_jtag_slave' start='0x18' end='0x20' type='altera_avalon_jtag_uart.avalon_jtag_slave' /&gt;&lt;slave name='timer_0.s1' start='0x20' end='0x40' type='altera_avalon_timer.s1' /&gt;&lt;slave name='nios2_gen2.debug_mem_slave' start='0x1000' end='0x1800' type='altera_nios2_gen2.debug_mem_slave' /&gt;&lt;slave name='touch_panel_spi.spi_control_port' start='0x1000000' end='0x1000020' type='altera_avalon_spi.spi_control_port' /&gt;&lt;slave name='timer_0.s1' start='0x1000020' end='0x1000040' type='altera_avalon_timer.s1' /&gt;&lt;slave name='touch_panel_pen_irq_n.s1' start='0x1000040' end='0x1000050' type='altera_avalon_pio.s1' /&gt;&lt;slave name='touch_panel_busy.s1' start='0x1000050' end='0x1000060' type='altera_avalon_pio.s1' /&gt;&lt;slave name='LEDs.s1' start='0x1000060' end='0x1000070' type='altera_avalon_pio.s1' /&gt;&lt;slave name='push_button.s1' start='0x1000070' end='0x1000080' type='altera_avalon_pio.s1' /&gt;&lt;slave name='sliders.s1' start='0x1000080' end='0x1000090' type='altera_avalon_pio.s1' /&gt;&lt;slave name='LCD_reset_n.s1' start='0x1000090' end='0x10000A0' type='altera_avalon_pio.s1' /&gt;&lt;slave name='sysid_qsys_0.control_slave' start='0x10000A0' end='0x10000A8' type='altera_avalon_sysid_qsys.control_slave' /&gt;&lt;slave name='sdram.s1' start='0x8000000' end='0xC000000' type='altera_avalon_new_sdram_controller.s1' /&gt;&lt;/address-map&gt;</td>
+        <td class="parametervalue">&lt;address-map&gt;&lt;slave name='system_pll.pll_slave' start='0x0' end='0x10' type='altpll.pll_slave' /&gt;&lt;slave name='LT24_Controller_0.avalon_slave_0' start='0x10' end='0x18' type='LT24_Controller.avalon_slave_0' /&gt;&lt;slave name='jtag_uart_0.avalon_jtag_slave' start='0x18' end='0x20' type='altera_avalon_jtag_uart.avalon_jtag_slave' /&gt;&lt;slave name='timer_0.s1' start='0x20' end='0x40' type='altera_avalon_timer.s1' /&gt;&lt;slave name='nios2_gen2.debug_mem_slave' start='0x1000' end='0x1800' type='altera_nios2_gen2.debug_mem_slave' /&gt;&lt;slave name='touch_panel_spi.spi_control_port' start='0x1000000' end='0x1000020' type='altera_avalon_spi.spi_control_port' /&gt;&lt;slave name='timer_0.s1' start='0x1000020' end='0x1000040' type='altera_avalon_timer.s1' /&gt;&lt;slave name='touch_panel_pen_irq_n.s1' start='0x1000040' end='0x1000050' type='altera_avalon_pio.s1' /&gt;&lt;slave name='touch_panel_busy.s1' start='0x1000050' end='0x1000060' type='altera_avalon_pio.s1' /&gt;&lt;slave name='push_button.s1' start='0x1000060' end='0x1000070' type='altera_avalon_pio.s1' /&gt;&lt;slave name='sliders.s1' start='0x1000070' end='0x1000080' type='altera_avalon_pio.s1' /&gt;&lt;slave name='LCD_reset_n.s1' start='0x1000080' end='0x1000090' type='altera_avalon_pio.s1' /&gt;&lt;slave name='sysid_qsys_0.control_slave' start='0x1000090' end='0x1000098' type='altera_avalon_sysid_qsys.control_slave' /&gt;&lt;slave name='sdram.s1' start='0x8000000' end='0xC000000' type='altera_avalon_new_sdram_controller.s1' /&gt;&lt;/address-map&gt;</td>
        </tr>
        <tr>
         <td class="parametername">tightlyCoupledDataMaster0MapParam</td>
@@ -2489,11 +2225,11 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        </tr>
        <tr>
         <td class="parametername">AUTO_CLK_CLOCK_DOMAIN</td>
-        <td class="parametervalue">6</td>
+        <td class="parametervalue">5</td>
        </tr>
        <tr>
         <td class="parametername">AUTO_CLK_RESET_DOMAIN</td>
-        <td class="parametervalue">6</td>
+        <td class="parametervalue">5</td>
        </tr>
        <tr>
         <td class="parametername">deviceFamily</td>
@@ -2558,7 +2294,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        </tr>
        <tr>
         <td class="parametername">DCACHE_SIZE</td>
-        <td class="parametervalue">2048</td>
+        <td class="parametervalue">65536</td>
        </tr>
        <tr>
         <td class="parametername">EXCEPTION_ADDR</td>
@@ -2618,7 +2354,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        </tr>
        <tr>
         <td class="parametername">ICACHE_SIZE</td>
-        <td class="parametervalue">4096</td>
+        <td class="parametervalue">8192</td>
        </tr>
        <tr>
         <td class="parametername">INITDA_SUPPORTED</td>
@@ -3433,7 +3169,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        </tr>
        <tr>
         <td class="parametername">timestamp</td>
-        <td class="parametervalue">1525870912</td>
+        <td class="parametervalue">1526918649</td>
        </tr>
        <tr>
         <td class="parametername">deviceFamily</td>
@@ -3458,7 +3194,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        </tr>
        <tr>
         <td class="parametername">TIMESTAMP</td>
-        <td class="parametervalue">1525870912</td>
+        <td class="parametervalue">1526918649</td>
        </tr>
       </table>
      </td>
@@ -3477,7 +3213,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        <a href="#module_nios2_gen2">nios2_gen2</a>
       </td>
       <td class="from">data_master&#160;&#160;</td>
-      <td class="main" rowspan="49">system_pll</td>
+      <td class="main" rowspan="46">system_pll</td>
      </tr>
      <tr>
       <td class="to">&#160;&#160;pll_slave</td>
@@ -3698,22 +3434,6 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
       <td class="from">c3&#160;&#160;</td>
       <td class="neighbor" rowspan="2">
        <a href="#module_sliders">sliders</a>
-      </td>
-     </tr>
-     <tr>
-      <td></td>
-      <td></td>
-      <td class="to">&#160;&#160;clk</td>
-     </tr>
-     <tr style="height:6px">
-      <td></td>
-     </tr>
-     <tr>
-      <td></td>
-      <td></td>
-      <td class="from">c3&#160;&#160;</td>
-      <td class="neighbor" rowspan="2">
-       <a href="#module_LEDs">LEDs</a>
       </td>
      </tr>
      <tr>
@@ -4156,7 +3876,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        </tr>
        <tr>
         <td class="parametername">PORT_clk2</td>
-        <td class="parametervalue">PORT_USED</td>
+        <td class="parametervalue">PORT_UNUSED</td>
        </tr>
        <tr>
         <td class="parametername">PORT_clk3</td>
@@ -4164,7 +3884,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        </tr>
        <tr>
         <td class="parametername">PORT_clk4</td>
-        <td class="parametervalue">PORT_USED</td>
+        <td class="parametervalue">PORT_UNUSED</td>
        </tr>
        <tr>
         <td class="parametername">PORT_clk5</td>
@@ -4356,11 +4076,11 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        </tr>
        <tr>
         <td class="parametername">HIDDEN_CONSTANTS</td>
-        <td class="parametervalue">CT#CLK2_DIVIDE_BY 5 CT#PORT_clk5 PORT_UNUSED CT#PORT_clk4 PORT_USED CT#PORT_clk3 PORT_USED CT#PORT_clk2 PORT_USED CT#PORT_clk1 PORT_USED CT#PORT_clk0 PORT_USED CT#CLK0_MULTIPLY_BY 2 CT#PORT_SCANWRITE PORT_UNUSED CT#PORT_SCANACLR PORT_UNUSED CT#PORT_PFDENA PORT_UNUSED CT#CLK3_DUTY_CYCLE 50 CT#CLK3_DIVIDE_BY 5 CT#PORT_PLLENA PORT_UNUSED CT#PORT_SCANDATA PORT_UNUSED CT#CLK3_PHASE_SHIFT 0 CT#PORT_SCANCLKENA PORT_UNUSED CT#CLK4_DIVIDE_BY 5 CT#WIDTH_CLOCK 5 CT#PORT_SCANDATAOUT PORT_UNUSED CT#CLK4_MULTIPLY_BY 4 CT#LPM_TYPE altpll CT#PLL_TYPE AUTO CT#CLK0_PHASE_SHIFT 0 CT#CLK1_DUTY_CYCLE 50 CT#PORT_PHASEDONE PORT_UNUSED CT#OPERATION_MODE NORMAL CT#PORT_CONFIGUPDATE PORT_UNUSED CT#CLK1_MULTIPLY_BY 2 CT#COMPENSATE_CLOCK CLK0 CT#PORT_CLKSWITCH PORT_UNUSED CT#CLK4_PHASE_SHIFT 0 CT#INCLK0_INPUT_FREQUENCY 20000 CT#CLK4_DUTY_CYCLE 50 CT#PORT_SCANDONE PORT_UNUSED CT#PORT_CLKLOSS PORT_UNUSED CT#PORT_INCLK1 PORT_UNUSED CT#AVALON_USE_SEPARATE_SYSCLK NO CT#PORT_INCLK0 PORT_USED CT#PORT_clkena5 PORT_UNUSED CT#PORT_clkena4 PORT_UNUSED CT#PORT_clkena3 PORT_UNUSED CT#PORT_clkena2 PORT_UNUSED CT#PORT_clkena1 PORT_UNUSED CT#PORT_clkena0 PORT_UNUSED CT#CLK1_PHASE_SHIFT -3000 CT#PORT_ARESET PORT_UNUSED CT#BANDWIDTH_TYPE AUTO CT#CLK2_MULTIPLY_BY 1 CT#INTENDED_DEVICE_FAMILY {MAX 10} CT#PORT_SCANREAD PORT_UNUSED CT#CLK2_DUTY_CYCLE 50 CT#PORT_PHASESTEP PORT_UNUSED CT#PORT_SCANCLK PORT_UNUSED CT#PORT_CLKBAD1 PORT_UNUSED CT#PORT_CLKBAD0 PORT_UNUSED CT#PORT_FBIN PORT_UNUSED CT#PORT_PHASEUPDOWN PORT_UNUSED CT#PORT_extclk3 PORT_UNUSED CT#PORT_extclk2 PORT_UNUSED CT#PORT_extclk1 PORT_UNUSED CT#PORT_PHASECOUNTERSELECT PORT_UNUSED CT#PORT_extclk0 PORT_UNUSED CT#PORT_ACTIVECLOCK PORT_UNUSED CT#CLK2_PHASE_SHIFT 0 CT#CLK0_DUTY_CYCLE 50 CT#CLK0_DIVIDE_BY 1 CT#CLK1_DIVIDE_BY 1 CT#CLK3_MULTIPLY_BY 1 CT#PORT_LOCKED PORT_UNUSED</td>
+        <td class="parametervalue">CT#CLK2_DIVIDE_BY 5 CT#PORT_clk5 PORT_UNUSED CT#PORT_clk4 PORT_UNUSED CT#PORT_clk3 PORT_USED CT#PORT_clk2 PORT_UNUSED CT#PORT_clk1 PORT_USED CT#PORT_clk0 PORT_USED CT#CLK0_MULTIPLY_BY 2 CT#PORT_SCANWRITE PORT_UNUSED CT#PORT_SCANACLR PORT_UNUSED CT#PORT_PFDENA PORT_UNUSED CT#CLK3_DUTY_CYCLE 50 CT#CLK3_DIVIDE_BY 5 CT#PORT_PLLENA PORT_UNUSED CT#PORT_SCANDATA PORT_UNUSED CT#CLK3_PHASE_SHIFT 0 CT#PORT_SCANCLKENA PORT_UNUSED CT#CLK4_DIVIDE_BY 5 CT#WIDTH_CLOCK 5 CT#PORT_SCANDATAOUT PORT_UNUSED CT#CLK4_MULTIPLY_BY 4 CT#LPM_TYPE altpll CT#PLL_TYPE AUTO CT#CLK0_PHASE_SHIFT 0 CT#CLK1_DUTY_CYCLE 50 CT#PORT_PHASEDONE PORT_UNUSED CT#OPERATION_MODE NORMAL CT#PORT_CONFIGUPDATE PORT_UNUSED CT#CLK1_MULTIPLY_BY 2 CT#COMPENSATE_CLOCK CLK0 CT#PORT_CLKSWITCH PORT_UNUSED CT#CLK4_PHASE_SHIFT 0 CT#INCLK0_INPUT_FREQUENCY 20000 CT#CLK4_DUTY_CYCLE 50 CT#PORT_SCANDONE PORT_UNUSED CT#PORT_CLKLOSS PORT_UNUSED CT#PORT_INCLK1 PORT_UNUSED CT#AVALON_USE_SEPARATE_SYSCLK NO CT#PORT_INCLK0 PORT_USED CT#PORT_clkena5 PORT_UNUSED CT#PORT_clkena4 PORT_UNUSED CT#PORT_clkena3 PORT_UNUSED CT#PORT_clkena2 PORT_UNUSED CT#PORT_clkena1 PORT_UNUSED CT#PORT_clkena0 PORT_UNUSED CT#CLK1_PHASE_SHIFT -3000 CT#PORT_ARESET PORT_UNUSED CT#BANDWIDTH_TYPE AUTO CT#CLK2_MULTIPLY_BY 1 CT#INTENDED_DEVICE_FAMILY {MAX 10} CT#PORT_SCANREAD PORT_UNUSED CT#CLK2_DUTY_CYCLE 50 CT#PORT_PHASESTEP PORT_UNUSED CT#PORT_SCANCLK PORT_UNUSED CT#PORT_CLKBAD1 PORT_UNUSED CT#PORT_CLKBAD0 PORT_UNUSED CT#PORT_FBIN PORT_UNUSED CT#PORT_PHASEUPDOWN PORT_UNUSED CT#PORT_extclk3 PORT_UNUSED CT#PORT_extclk2 PORT_UNUSED CT#PORT_extclk1 PORT_UNUSED CT#PORT_PHASECOUNTERSELECT PORT_UNUSED CT#PORT_extclk0 PORT_UNUSED CT#PORT_ACTIVECLOCK PORT_UNUSED CT#CLK2_PHASE_SHIFT 0 CT#CLK0_DUTY_CYCLE 50 CT#CLK0_DIVIDE_BY 1 CT#CLK1_DIVIDE_BY 1 CT#CLK3_MULTIPLY_BY 1 CT#PORT_LOCKED PORT_UNUSED</td>
        </tr>
        <tr>
         <td class="parametername">HIDDEN_PRIVATES</td>
-        <td class="parametervalue">PT#GLOCKED_FEATURE_ENABLED 0 PT#SPREAD_FEATURE_ENABLED 0 PT#BANDWIDTH_FREQ_UNIT MHz PT#CUR_DEDICATED_CLK c0 PT#INCLK0_FREQ_EDIT 50.000 PT#BANDWIDTH_PRESET Low PT#PLL_LVDS_PLL_CHECK 0 PT#BANDWIDTH_USE_PRESET 0 PT#AVALON_USE_SEPARATE_SYSCLK NO PT#OUTPUT_FREQ_UNIT4 MHz PT#OUTPUT_FREQ_UNIT3 MHz PT#PLL_ENHPLL_CHECK 0 PT#OUTPUT_FREQ_UNIT2 MHz PT#OUTPUT_FREQ_UNIT1 MHz PT#OUTPUT_FREQ_UNIT0 MHz PT#PHASE_RECONFIG_FEATURE_ENABLED 1 PT#CREATE_CLKBAD_CHECK 0 PT#CLKSWITCH_CHECK 0 PT#INCLK1_FREQ_EDIT 100.000 PT#NORMAL_MODE_RADIO 1 PT#SRC_SYNCH_COMP_RADIO 0 PT#PLL_ARESET_CHECK 0 PT#LONG_SCAN_RADIO 1 PT#SCAN_FEATURE_ENABLED 1 PT#USE_CLK4 1 PT#USE_CLK3 1 PT#USE_CLK2 1 PT#PHASE_RECONFIG_INPUTS_CHECK 0 PT#USE_CLK1 1 PT#USE_CLK0 1 PT#PRIMARY_CLK_COMBO inclk0 PT#BANDWIDTH 1.000 PT#GLOCKED_COUNTER_EDIT_CHANGED 1 PT#PLL_FASTPLL_CHECK 0 PT#SPREAD_FREQ_UNIT KHz PT#LVDS_PHASE_SHIFT_UNIT4 deg PT#LVDS_PHASE_SHIFT_UNIT3 deg PT#PLL_AUTOPLL_CHECK 1 PT#OUTPUT_FREQ_MODE4 1 PT#LVDS_PHASE_SHIFT_UNIT2 deg PT#OUTPUT_FREQ_MODE3 1 PT#LVDS_PHASE_SHIFT_UNIT1 deg PT#OUTPUT_FREQ_MODE2 1 PT#LVDS_PHASE_SHIFT_UNIT0 deg PT#OUTPUT_FREQ_MODE1 1 PT#SWITCHOVER_FEATURE_ENABLED 0 PT#MIG_DEVICE_SPEED_GRADE Any PT#OUTPUT_FREQ_MODE0 1 PT#BANDWIDTH_FEATURE_ENABLED 1 PT#INCLK0_FREQ_UNIT_COMBO MHz PT#ZERO_DELAY_RADIO 0 PT#OUTPUT_FREQ4 40.00000000 PT#OUTPUT_FREQ3 10.00000000 PT#OUTPUT_FREQ2 10.00000000 PT#OUTPUT_FREQ1 100.00000000 PT#OUTPUT_FREQ0 100.00000000 PT#SHORT_SCAN_RADIO 0 PT#LVDS_MODE_DATA_RATE_DIRTY 0 PT#CUR_FBIN_CLK c0 PT#PLL_ADVANCED_PARAM_CHECK 0 PT#CLKBAD_SWITCHOVER_CHECK 0 PT#PHASE_SHIFT_STEP_ENABLED_CHECK 0 PT#DEVICE_SPEED_GRADE 7 PT#PLL_FBMIMIC_CHECK 0 PT#LVDS_MODE_DATA_RATE {Not Available} PT#PHASE_SHIFT4 0.00000000 PT#LOCKED_OUTPUT_CHECK 0 PT#SPREAD_PERCENT 0.500 PT#PHASE_SHIFT3 0.00000000 PT#DIV_FACTOR4 1 PT#PHASE_SHIFT2 0.00000000 PT#DIV_FACTOR3 1 PT#PHASE_SHIFT1 -3.00000000 PT#DIV_FACTOR2 1 PT#PHASE_SHIFT0 0.00000000 PT#DIV_FACTOR1 1 PT#DIV_FACTOR0 1 PT#CNX_NO_COMPENSATE_RADIO 0 PT#USE_CLKENA4 0 PT#USE_CLKENA3 0 PT#USE_CLKENA2 0 PT#USE_CLKENA1 0 PT#USE_CLKENA0 0 PT#CREATE_INCLK1_CHECK 0 PT#GLOCK_COUNTER_EDIT 1048575 PT#INCLK1_FREQ_UNIT_COMBO MHz PT#EFF_OUTPUT_FREQ_VALUE4 40.000000 PT#EFF_OUTPUT_FREQ_VALUE3 10.000000 PT#EFF_OUTPUT_FREQ_VALUE2 10.000000 PT#EFF_OUTPUT_FREQ_VALUE1 100.000000 PT#EFF_OUTPUT_FREQ_VALUE0 100.000000 PT#SPREAD_FREQ 50.000 PT#USE_MIL_SPEED_GRADE 0 PT#STICKY_CLK4 1 PT#EXPLICIT_SWITCHOVER_COUNTER 0 PT#STICKY_CLK3 1 PT#STICKY_CLK2 1 PT#STICKY_CLK1 1 PT#STICKY_CLK0 1 PT#MIRROR_CLK4 0 PT#EXT_FEEDBACK_RADIO 0 PT#MIRROR_CLK3 0 PT#MIRROR_CLK2 0 PT#MIRROR_CLK1 0 PT#SWITCHOVER_COUNT_EDIT 1 PT#MIRROR_CLK0 0 PT#SELF_RESET_LOCK_LOSS 0 PT#PLL_PFDENA_CHECK 0 PT#INT_FEEDBACK__MODE_RADIO 1 PT#INCLK1_FREQ_EDIT_CHANGED 1 PT#SYNTH_WRAPPER_GEN_POSTFIX 0 PT#CLKLOSS_CHECK 0 PT#PHASE_SHIFT_UNIT4 deg PT#PHASE_SHIFT_UNIT3 deg PT#PHASE_SHIFT_UNIT2 deg PT#PHASE_SHIFT_UNIT1 ns PT#PHASE_SHIFT_UNIT0 deg PT#BANDWIDTH_USE_AUTO 1 PT#HAS_MANUAL_SWITCHOVER 1 PT#MULT_FACTOR4 1 PT#MULT_FACTOR3 1 PT#MULT_FACTOR2 1 PT#MULT_FACTOR1 1 PT#MULT_FACTOR0 1 PT#SPREAD_USE 0 PT#GLOCKED_MODE_CHECK 0 PT#DUTY_CYCLE4 50.00000000 PT#DUTY_CYCLE3 50.00000000 PT#DUTY_CYCLE2 50.00000000 PT#SACN_INPUTS_CHECK 0 PT#DUTY_CYCLE1 50.00000000 PT#INTENDED_DEVICE_FAMILY {MAX 10} PT#DUTY_CYCLE0 50.00000000 PT#PLL_TARGET_HARCOPY_CHECK 0 PT#INCLK1_FREQ_UNIT_CHANGED 1 PT#RECONFIG_FILE ALTPLL1525271072166545.mif PT#ACTIVECLK_CHECK 0</td>
+        <td class="parametervalue">PT#GLOCKED_FEATURE_ENABLED 0 PT#SPREAD_FEATURE_ENABLED 0 PT#BANDWIDTH_FREQ_UNIT MHz PT#CUR_DEDICATED_CLK c0 PT#INCLK0_FREQ_EDIT 50.000 PT#BANDWIDTH_PRESET Low PT#PLL_LVDS_PLL_CHECK 0 PT#BANDWIDTH_USE_PRESET 0 PT#AVALON_USE_SEPARATE_SYSCLK NO PT#OUTPUT_FREQ_UNIT4 MHz PT#OUTPUT_FREQ_UNIT3 MHz PT#PLL_ENHPLL_CHECK 0 PT#OUTPUT_FREQ_UNIT2 MHz PT#OUTPUT_FREQ_UNIT1 MHz PT#OUTPUT_FREQ_UNIT0 MHz PT#PHASE_RECONFIG_FEATURE_ENABLED 1 PT#CREATE_CLKBAD_CHECK 0 PT#CLKSWITCH_CHECK 0 PT#INCLK1_FREQ_EDIT 100.000 PT#NORMAL_MODE_RADIO 1 PT#SRC_SYNCH_COMP_RADIO 0 PT#PLL_ARESET_CHECK 0 PT#LONG_SCAN_RADIO 1 PT#SCAN_FEATURE_ENABLED 1 PT#USE_CLK4 1 PT#USE_CLK3 1 PT#USE_CLK2 1 PT#PHASE_RECONFIG_INPUTS_CHECK 0 PT#USE_CLK1 1 PT#USE_CLK0 1 PT#PRIMARY_CLK_COMBO inclk0 PT#BANDWIDTH 1.000 PT#GLOCKED_COUNTER_EDIT_CHANGED 1 PT#PLL_FASTPLL_CHECK 0 PT#SPREAD_FREQ_UNIT KHz PT#LVDS_PHASE_SHIFT_UNIT4 deg PT#LVDS_PHASE_SHIFT_UNIT3 deg PT#PLL_AUTOPLL_CHECK 1 PT#OUTPUT_FREQ_MODE4 1 PT#LVDS_PHASE_SHIFT_UNIT2 deg PT#OUTPUT_FREQ_MODE3 1 PT#LVDS_PHASE_SHIFT_UNIT1 deg PT#OUTPUT_FREQ_MODE2 1 PT#LVDS_PHASE_SHIFT_UNIT0 deg PT#OUTPUT_FREQ_MODE1 1 PT#SWITCHOVER_FEATURE_ENABLED 0 PT#MIG_DEVICE_SPEED_GRADE Any PT#OUTPUT_FREQ_MODE0 1 PT#BANDWIDTH_FEATURE_ENABLED 1 PT#INCLK0_FREQ_UNIT_COMBO MHz PT#ZERO_DELAY_RADIO 0 PT#OUTPUT_FREQ4 40.00000000 PT#OUTPUT_FREQ3 10.00000000 PT#OUTPUT_FREQ2 10.00000000 PT#OUTPUT_FREQ1 100.00000000 PT#OUTPUT_FREQ0 100.00000000 PT#SHORT_SCAN_RADIO 0 PT#LVDS_MODE_DATA_RATE_DIRTY 0 PT#CUR_FBIN_CLK c0 PT#PLL_ADVANCED_PARAM_CHECK 0 PT#CLKBAD_SWITCHOVER_CHECK 0 PT#PHASE_SHIFT_STEP_ENABLED_CHECK 0 PT#DEVICE_SPEED_GRADE 7 PT#PLL_FBMIMIC_CHECK 0 PT#LVDS_MODE_DATA_RATE {Not Available} PT#PHASE_SHIFT4 0.00000000 PT#LOCKED_OUTPUT_CHECK 0 PT#SPREAD_PERCENT 0.500 PT#PHASE_SHIFT3 0.00000000 PT#DIV_FACTOR4 1 PT#PHASE_SHIFT2 0.00000000 PT#DIV_FACTOR3 1 PT#PHASE_SHIFT1 -3.00000000 PT#DIV_FACTOR2 1 PT#PHASE_SHIFT0 0.00000000 PT#DIV_FACTOR1 1 PT#DIV_FACTOR0 1 PT#CNX_NO_COMPENSATE_RADIO 0 PT#USE_CLKENA4 0 PT#USE_CLKENA3 0 PT#USE_CLKENA2 0 PT#USE_CLKENA1 0 PT#USE_CLKENA0 0 PT#CREATE_INCLK1_CHECK 0 PT#GLOCK_COUNTER_EDIT 1048575 PT#INCLK1_FREQ_UNIT_COMBO MHz PT#EFF_OUTPUT_FREQ_VALUE4 40.000000 PT#EFF_OUTPUT_FREQ_VALUE3 10.000000 PT#EFF_OUTPUT_FREQ_VALUE2 10.000000 PT#EFF_OUTPUT_FREQ_VALUE1 100.000000 PT#EFF_OUTPUT_FREQ_VALUE0 100.000000 PT#SPREAD_FREQ 50.000 PT#USE_MIL_SPEED_GRADE 0 PT#STICKY_CLK4 0 PT#EXPLICIT_SWITCHOVER_COUNTER 0 PT#STICKY_CLK3 1 PT#STICKY_CLK2 0 PT#STICKY_CLK1 1 PT#STICKY_CLK0 1 PT#MIRROR_CLK4 0 PT#EXT_FEEDBACK_RADIO 0 PT#MIRROR_CLK3 0 PT#MIRROR_CLK2 0 PT#MIRROR_CLK1 0 PT#SWITCHOVER_COUNT_EDIT 1 PT#MIRROR_CLK0 0 PT#SELF_RESET_LOCK_LOSS 0 PT#PLL_PFDENA_CHECK 0 PT#INT_FEEDBACK__MODE_RADIO 1 PT#INCLK1_FREQ_EDIT_CHANGED 1 PT#SYNTH_WRAPPER_GEN_POSTFIX 0 PT#CLKLOSS_CHECK 0 PT#PHASE_SHIFT_UNIT4 deg PT#PHASE_SHIFT_UNIT3 deg PT#PHASE_SHIFT_UNIT2 deg PT#PHASE_SHIFT_UNIT1 ns PT#PHASE_SHIFT_UNIT0 deg PT#BANDWIDTH_USE_AUTO 1 PT#HAS_MANUAL_SWITCHOVER 1 PT#MULT_FACTOR4 1 PT#MULT_FACTOR3 1 PT#MULT_FACTOR2 1 PT#MULT_FACTOR1 1 PT#MULT_FACTOR0 1 PT#SPREAD_USE 0 PT#GLOCKED_MODE_CHECK 0 PT#DUTY_CYCLE4 50.00000000 PT#DUTY_CYCLE3 50.00000000 PT#DUTY_CYCLE2 50.00000000 PT#SACN_INPUTS_CHECK 0 PT#DUTY_CYCLE1 50.00000000 PT#INTENDED_DEVICE_FAMILY {MAX 10} PT#DUTY_CYCLE0 50.00000000 PT#PLL_TARGET_HARCOPY_CHECK 0 PT#INCLK1_FREQ_UNIT_CHANGED 1 PT#RECONFIG_FILE ALTPLL1525271072166545.mif PT#ACTIVECLK_CHECK 0</td>
        </tr>
        <tr>
         <td class="parametername">HIDDEN_USED_PORTS</td>
@@ -5291,8 +5011,8 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
   </div>
   <table class="blueBar">
    <tr>
-    <td class="l">generation took 0,02 seconds</td>
-    <td class="r">rendering took 0,13 seconds</td>
+    <td class="l">generation took 0,00 seconds</td>
+    <td class="r">rendering took 0,06 seconds</td>
    </tr>
   </table>
  </body>

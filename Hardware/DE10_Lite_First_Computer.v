@@ -22,29 +22,10 @@ module DE10_Lite_First_Computer(
 	//////////// KEY //////////
 	input 		     [1:0]		KEY,
 
-	//////////// LED //////////
-	output		     [9:0]		LEDR,
 
 	//////////// SW //////////
 	input 		     [9:0]		SW,
 
-	//////////// VGA //////////
-	//output		     [3:0]		VGA_B,
-	//output		     [3:0]		VGA_G,
-	//output		          		VGA_HS,
-	//output		     [3:0]		VGA_R,
-	//output		          		VGA_VS,
-
-	//////////// Accelerometer //////////
-	//output		          		GSENSOR_CS_N,
-	//input 		     [2:1]		GSENSOR_INT,
-	//output		          		GSENSOR_SCLK,
-	//inout 		          		GSENSOR_SDI,
-	//inout 		          		GSENSOR_SDO,
-
-	//////////// Arduino //////////
-	//inout 		    [15:0]		ARDUINO_IO,
-	//inout 		          		ARDUINO_RESET_N,
 
 	//////////// GPIO, GPIO connect to LT24 - 2.4" LCD and Touch //////////
 	input 		          		LT24_ADC_BUSY,
@@ -76,21 +57,16 @@ module DE10_Lite_First_Computer(
 //=======================================================
 
 
-//assign ARDUINO_IO			= 16'bZ;
-//assign ARDUINO_RESET_N	= 1'bz;
-
 assign reset_n				= KEY[1];
 assign LT24_LCD_ON 		= 1'b1;	//default on
 
     DE10_Lite_SOPC u0 (
         .clk_clk                                          (MAX10_CLK1_50),                                          //                                       clk.clk
         .clk_sdram_clk                                    (DRAM_CLK),                                    //                                 clk_sdram.clk
-		  .vga_clk_clk                                      (),                                      	   //                                   vga_clk.clk
 	     .reset_reset_n                                    (reset_n),                                    //                                     reset.reset_n
 
 		  .push_button_export                               (KEY),                               //                               push_button.export
 		  .sliders_export                                   (SW),                                   //                                   sliders.export
-        .leds_export                                      (LEDR),                                      //                                      leds.export
 
         .lcd_reset_n_external_connection_export           (LT24_RESET_N),           //           lcd_reset_n_external_connection.export
         .lt24_controller_0_conduit_end_export_cs          (LT24_CS_N),          //             lt24_controller_0_conduit_end.export_cs

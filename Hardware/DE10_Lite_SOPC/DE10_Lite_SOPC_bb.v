@@ -3,7 +3,6 @@ module DE10_Lite_SOPC (
 	clk_clk,
 	clk_sdram_clk,
 	lcd_reset_n_external_connection_export,
-	leds_export,
 	lt24_controller_0_conduit_end_export_cs,
 	lt24_controller_0_conduit_end_export_data,
 	lt24_controller_0_conduit_end_export_rd,
@@ -26,13 +25,11 @@ module DE10_Lite_SOPC (
 	touch_panel_spi_external_MISO,
 	touch_panel_spi_external_MOSI,
 	touch_panel_spi_external_SCLK,
-	touch_panel_spi_external_SS_n,
-	vga_clk_clk);	
+	touch_panel_spi_external_SS_n);	
 
 	input		clk_clk;
 	output		clk_sdram_clk;
 	output		lcd_reset_n_external_connection_export;
-	output	[9:0]	leds_export;
 	output		lt24_controller_0_conduit_end_export_cs;
 	output	[15:0]	lt24_controller_0_conduit_end_export_data;
 	output		lt24_controller_0_conduit_end_export_rd;
@@ -56,5 +53,4 @@ module DE10_Lite_SOPC (
 	output		touch_panel_spi_external_MOSI;
 	output		touch_panel_spi_external_SCLK;
 	output		touch_panel_spi_external_SS_n;
-	output		vga_clk_clk;
 endmodule

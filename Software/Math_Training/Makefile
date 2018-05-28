@@ -143,17 +143,16 @@ ELF := Math_Training.elf
 
 # Paths to C, C++, and assembly source files.
 C_SRCS += main.c
-C_SRCS += src/1lnn.c
 C_SRCS += src/LCD.c
 C_SRCS += src/geometry.c
-C_SRCS += src/mnist-utils.c
 C_SRCS += src/simple_graphics.c
 C_SRCS += src/simple_text.c
 C_SRCS += src/tahomabold_20.c
 C_SRCS += src/tahomabold_32.c
 C_SRCS += src/touch_spi.c
-C_SRCS += src/weights.c
 C_SRCS += src/gui.c
+C_SRCS += src/random_gen.c
+C_SRCS += src/1lnn.c
 CXX_SRCS :=
 ASM_SRCS :=
 

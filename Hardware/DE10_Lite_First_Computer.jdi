@@ -1,6 +1,6 @@
 <sld_project_info>
   <project>
-    <hash md5_digest_80b="85caeb58605e3eaec73a"/>
+    <hash md5_digest_80b="fabe613822edfcac3a0e"/>
   </project>
   <file_info>
     <file device="10M50DAF484C7G" path="DE10_Lite_First_Computer_time_limited.sof" usercode="0xFFFFFFFF"/>
@@ -100,7 +100,7 @@
     </sld_info>
     <sld_info hpath="DE10_Lite_SOPC:u0" name="u0">
       <assignment_values>
-        <assignment_value text="QSYS_NAME DE10_Lite_SOPC HAS_SOPCINFO 1 GENERATION_ID 1525870912"/>
+        <assignment_value text="QSYS_NAME DE10_Lite_SOPC HAS_SOPCINFO 1 GENERATION_ID 1526918649"/>
       </assignment_values>
       <parameters/>
     </sld_info>

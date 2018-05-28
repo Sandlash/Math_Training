@@ -3,7 +3,6 @@
 			clk_clk                                          : in    std_logic                     := 'X';             -- clk
 			clk_sdram_clk                                    : out   std_logic;                                        -- clk
 			lcd_reset_n_external_connection_export           : out   std_logic;                                        -- export
-			leds_export                                      : out   std_logic_vector(9 downto 0);                     -- export
 			lt24_controller_0_conduit_end_export_cs          : out   std_logic;                                        -- export_cs
 			lt24_controller_0_conduit_end_export_data        : out   std_logic_vector(15 downto 0);                    -- export_data
 			lt24_controller_0_conduit_end_export_rd          : out   std_logic;                                        -- export_rd
@@ -26,8 +25,7 @@
 			touch_panel_spi_external_MISO                    : in    std_logic                     := 'X';             -- MISO
 			touch_panel_spi_external_MOSI                    : out   std_logic;                                        -- MOSI
 			touch_panel_spi_external_SCLK                    : out   std_logic;                                        -- SCLK
-			touch_panel_spi_external_SS_n                    : out   std_logic;                                        -- SS_n
-			vga_clk_clk                                      : out   std_logic                                         -- clk
+			touch_panel_spi_external_SS_n                    : out   std_logic                                         -- SS_n
 		);
 	end component DE10_Lite_SOPC;
 
@@ -36,7 +34,6 @@
 			clk_clk                                          => CONNECTED_TO_clk_clk,                                          --                                       clk.clk
 			clk_sdram_clk                                    => CONNECTED_TO_clk_sdram_clk,                                    --                                 clk_sdram.clk
 			lcd_reset_n_external_connection_export           => CONNECTED_TO_lcd_reset_n_external_connection_export,           --           lcd_reset_n_external_connection.export
-			leds_export                                      => CONNECTED_TO_leds_export,                                      --                                      leds.export
 			lt24_controller_0_conduit_end_export_cs          => CONNECTED_TO_lt24_controller_0_conduit_end_export_cs,          --             lt24_controller_0_conduit_end.export_cs
 			lt24_controller_0_conduit_end_export_data        => CONNECTED_TO_lt24_controller_0_conduit_end_export_data,        --                                          .export_data
 			lt24_controller_0_conduit_end_export_rd          => CONNECTED_TO_lt24_controller_0_conduit_end_export_rd,          --                                          .export_rd
@@ -59,7 +56,6 @@
 			touch_panel_spi_external_MISO                    => CONNECTED_TO_touch_panel_spi_external_MISO,                    --                  touch_panel_spi_external.MISO
 			touch_panel_spi_external_MOSI                    => CONNECTED_TO_touch_panel_spi_external_MOSI,                    --                                          .MOSI
 			touch_panel_spi_external_SCLK                    => CONNECTED_TO_touch_panel_spi_external_SCLK,                    --                                          .SCLK
-			touch_panel_spi_external_SS_n                    => CONNECTED_TO_touch_panel_spi_external_SS_n,                    --                                          .SS_n
-			vga_clk_clk                                      => CONNECTED_TO_vga_clk_clk                                       --                                   vga_clk.clk
+			touch_panel_spi_external_SS_n                    => CONNECTED_TO_touch_panel_spi_external_SS_n                     --                                          .SS_n
 		);
 

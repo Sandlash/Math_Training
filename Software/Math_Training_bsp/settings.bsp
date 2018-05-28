@@ -2,10 +2,10 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>hal</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>9-mag-2018 15.11.01</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1525871461692</BspGeneratedUnixTimeStamp>
+        <BspGeneratedTimeStamp>May 23, 2018 6:01:53 PM</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1527091313458</BspGeneratedUnixTimeStamp>
         <BspGeneratedLocation>C:\Users\emilio\UNI\Magistrale\Embedded\progetto\Math_Training\Software\Math_Training_bsp</BspGeneratedLocation>
-        <BspSettingsFile>.\settings.bsp</BspSettingsFile>
+        <BspSettingsFile>settings.bsp</BspSettingsFile>
         <SopcDesignFile>C:\Users\emilio\UNI\Magistrale\Embedded\progetto\Math_Training\SopC\DE10_Lite_SOPC.sopcinfo</SopcDesignFile>
         <JdiFile>default</JdiFile>
         <Cpu>nios2_gen2</Cpu>
@@ -941,32 +941,26 @@
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
-                <slaveDescriptor>LEDs</slaveDescriptor>
+                <slaveDescriptor>push_button</slaveDescriptor>
                 <addressRange>0x01000060 - 0x0100006F</addressRange>
                 <addressSpan>16</addressSpan>
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
-                <slaveDescriptor>push_button</slaveDescriptor>
+                <slaveDescriptor>sliders</slaveDescriptor>
                 <addressRange>0x01000070 - 0x0100007F</addressRange>
                 <addressSpan>16</addressSpan>
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
-                <slaveDescriptor>sliders</slaveDescriptor>
+                <slaveDescriptor>LCD_reset_n</slaveDescriptor>
                 <addressRange>0x01000080 - 0x0100008F</addressRange>
                 <addressSpan>16</addressSpan>
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
-                <slaveDescriptor>LCD_reset_n</slaveDescriptor>
-                <addressRange>0x01000090 - 0x0100009F</addressRange>
-                <addressSpan>16</addressSpan>
-                <attributes/>
-        </MemoryMap>
-        <MemoryMap>
                 <slaveDescriptor>sysid_qsys_0</slaveDescriptor>
-                <addressRange>0x010000A0 - 0x010000A7</addressRange>
+                <addressRange>0x01000090 - 0x01000097</addressRange>
                 <addressSpan>8</addressSpan>
                 <attributes/>
         </MemoryMap>
